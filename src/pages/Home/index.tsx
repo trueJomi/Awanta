@@ -34,7 +34,7 @@ const HomePage: React.FC = () => {
   }
 
   const getTransactions = (initDay: number) => {
-    transactionService.getIntervalTransactionListener(getUserId(), initDay, 'desc', (data) => {
+    return transactionService.getIntervalTransactionListener(getUserId(), initDay, 'desc', (data) => {
       const dataFiltredVisivility = data.filter(filtroVisivility)
       setTransactions(dataFiltredVisivility)
     })

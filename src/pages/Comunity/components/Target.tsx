@@ -20,8 +20,8 @@ const Target: React.FC<{ link: string }> = ({ link }) => {
   return (
     <div className="col-span-1 " >
         <div
-        className={`border-2 rounded-3xl mx-5 my-3 hover:scale-105 hover:border-transparent duration-500 bg-gray-500 ${loading && 'animate-pulse'}`} >
-          <iframe ref={iframeRef} className="rounded-3xl h-72 w-full hover:scale-105 duration-300" src={`${link}embed`}></iframe>
+        className={`border-2 rounded-xl mx-5 my-3 hover:scale-105 hover:border-transparent duration-500 bg-gray-500 ${loading && 'animate-pulse'}`} >
+          <iframe ref={iframeRef} className="rounded-xl h-[27rem] md:h-[25rem] w-full hover:scale-105 duration-300" src={`${link}embed`}></iframe>
         </div>
     </div>
   )

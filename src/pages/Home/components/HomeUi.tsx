@@ -7,7 +7,7 @@ import MixerGraficSquare from '../../../components/MixerGraficSquare.component'
 import { adapterNumberString } from '../../../adapters/Numbers.adapter'
 import { useTranslation } from 'react-i18next'
 import { useAuth } from '../../../hooks/Auth.hook'
-import { IconButton } from '@mui/material'
+import { IconButton, Tooltip } from '@mui/material'
 import CardTransactionsSqueleton from '../../../components/Squeletons/CardTransactionSqueleton.component'
 import CardTransaction from '../../../components/Transactions/CardTransaction.component'
 import FilterTransacctions from '../../../components/Transactions/FilterTransacctions.component'
@@ -74,12 +74,14 @@ const HomeUI: React.FC<PropsHomeUI> = ({ transactions5, setTransations, limiteGa
                       <div className='flex' >
                         <FilterTransacctions setTransactions={setTransations} transactions={transactions} />
                         <div className='pt-1' >
-                          <IconButton
-                            onClick={() => {
-                              setLoadingMessages(true)
-                            }} >
-                            <MdCached className={`${loadingMessages ? 'animate-spin' : ''}`}/>
-                          </IconButton>
+                          <Tooltip title={t('tab-1.reaload')}>
+                            <IconButton
+                              onClick={() => {
+                                setLoadingMessages(true)
+                              }} >
+                              <MdCached className={`${loadingMessages ? 'animate-spin' : ''}`}/>
+                            </IconButton>
+                          </Tooltip>
                         </div>
                       </div>
                     </div>

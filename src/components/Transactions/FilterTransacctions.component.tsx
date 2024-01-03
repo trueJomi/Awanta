@@ -35,8 +35,8 @@ const FilterTransacctions: React.FC<{ setTransactions: (data: Transaccion[]) => 
     }
   }, [transactions, type, invert, orderBy])
   return (
-    <div className='grid grid-flow-col justify-stretch gap-4 leading-6 w-full' >
-      <div className='max-w-44' >
+    <div className='items-center flex justify-stretch gap-4 leading-6 w-full' >
+      <div className='max-w-44 w-full' >
         <CustomInput
           type='text'
           select
@@ -59,7 +59,7 @@ const FilterTransacctions: React.FC<{ setTransactions: (data: Transaccion[]) => 
           ))}
         </CustomInput>
       </div>
-      <div className=' max-w-40' >
+      <div className=' max-w-40 w-full' >
         <CustomInput
           type='text'
           select
@@ -88,7 +88,7 @@ const FilterTransacctions: React.FC<{ setTransactions: (data: Transaccion[]) => 
             className= '!text-3xl'
             onChange={() => { setInvert(!invert) }}
           >
-            <MdSort/>
+            <MdSort className={`duration-200 ${invert ? 'rotate-180' : ''}`} />
           </ToggleButton>
         </Tooltip>
       </div>

@@ -103,11 +103,27 @@
         }
     },
     "auth":{
+        "title": {
+            "head-1": "oganiza",
+            "head-2": "tus",
+            "head-3": "finanzas",
+            "head-4": "hoy!",
+            "phrase-1": "Finanzas para",
+            "phrase-2": "Desorganizados"
+        },
+        "baner":{
+            "head-1": "no targetas",
+            "head-2": "solo con tu curreo",
+            "word-1": "oganizate",
+            "word-2": "ahorra",
+            "word-3": "invierte"
+        },
         "welcome":"inicia aqui",
         "terms":"terminos y condiciones",
         "google":"continua con Google"
     },
     "tab-1":{
+        "reaload":"recargar",
         "gasto":"Limite de Gastos",
         "loading-transactions":"cargando transacciones",
         "last-transactions":"ultimas transacciones", 

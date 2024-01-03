@@ -3,16 +3,16 @@ import React from 'react'
 import { imgFinanzas, pngTitulo } from '../../../contexts/images.context'
 import Typed from 'typed.js'
 import { useTranslation } from 'react-i18next'
-import LanguageButton from '../../../components/languageButton.component'
+import LanguageButton from '../../../components/LanguageButton.component'
 
 const AuthUI: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 //   const navigate = useNavigate()
   const textChange = React.useRef(null)
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
 
   React.useEffect(() => {
     const typed = new Typed(textChange.current, {
-      strings: ['<span>organizate📊</span>^1000\n<br><span class="text-green-500" >Ahorra💰</span>^1000\n<br><span class="text-blue-400" >Invierte📈</span>'],
+      strings: [`<span>${t('auth.baner.word-1')}📊</span>^1000\n<br><span class="text-green-500" >${t('auth.baner.word-2')}💰</span>^1000\n<br><span class="text-blue-400" >${t('auth.baner.word-3')}📈</span>`],
       typeSpeed: 50,
       backSpeed: 50,
       cursorChar: '_',
@@ -21,10 +21,9 @@ const AuthUI: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     })
 
     return () => {
-      // Destroy Typed instance during cleanup to stop animation
       typed.destroy()
     }
-  }, [])
+  }, [i18n.language])
 
   return (
         <div
@@ -38,9 +37,9 @@ const AuthUI: React.FC<{ children: React.ReactNode }> = ({ children }) => {
             <div className="grid grid-cols-1 lg:grid-cols-2 w-full xl:grid-cols-3" >
                 <div className="w-full grid items-center bg-black bg-opacity-70 lg:bg-opacity-100 pt-12  h-screen text text-main-white">
                     <div className="text-3xl mt-8 text-center w-full font-bold" >
-                        <h2><span className="uppercase font-bold font-sans text-main-yellow text-4xl" >Organiza</span> tus</h2>
-                        <h1 className="uppercase font-black text-main-yellow font-sans text-5xl" >Finanazas</h1>
-                        <h2 className="text-4xl" >Hoy!</h2>
+                        <h2><span className="uppercase font-bold font-sans text-main-yellow text-4xl" >{t('auth.title.head-1')}</span> {t('auth.title.head-2')}</h2>
+                        <h1 className="uppercase font-black text-main-yellow font-sans text-5xl" >{t('auth.title.head-3')}</h1>
+                        <h2 className="text-4xl capitalize" >{t('auth.title.head-4')}</h2>
                     </div>
                     <div className="form-header mx-auto">
                         <div>
@@ -57,21 +56,21 @@ const AuthUI: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                         </div>
                     </div>
                     <div className=" w-full text-main-yellow text-center font-Romance text-6xl" >
-                        <h1>Finanzas para</h1>
-                        <h1>Desorganizados</h1>
+                        <h1>{t('auth.title.phrase-1')}</h1>
+                        <h1>{t('auth.title.phrase-2')}</h1>
                     </div>
                     <div className="w-full text-center" >
                         <button onClick={() => {
                         // navigate('/conditions')
-                        }} className=" bg-main-white text-gray-800 py-2 px-4 rounded-full font-bold" >
+                        }} className=" bg-main-white lowercase text-gray-800 py-2 px-4 rounded-full font-bold" >
                             {t('auth.terms')}
                         </button>
                     </div>
                 </div>
                 <div className="w-full relative bg-opacity-100 lg:bg-opacity-70 bg-gray-800  xl:col-span-2 h-screen grid items-center uppercase text-3xl" >
                     <div className=" h-96 sm:h-80 p-10 border-2 border-main-white text-main-white mx-2 max-w-xl sm:mx-auto" >
-                        <h1 className="font-black text-main-yellow text-center" >Sin Tarjetas</h1>
-                        <h1 className="mb-10 text-center" >solo con tu correo</h1>
+                        <h1 className="font-black text-main-yellow text-center" >{t('auth.baner.head-1')}</h1>
+                        <h1 className="mb-10 text-center" >{t('auth.baner.head-2')}</h1>
                         <div className="w-full" >
                             <div className="mx-auto" >
                                 <span className="font-black text-main-yellow font-mono text-3xl" ref={textChange}></span>

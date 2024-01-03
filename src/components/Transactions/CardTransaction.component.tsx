@@ -1,6 +1,6 @@
 import React from 'react'
 import { type Transaccion } from '../../models/Transaccion.model'
-import { Card, CardActions, CardContent, IconButton } from '@mui/material'
+import { Card, CardActions, CardContent, IconButton, Tooltip } from '@mui/material'
 import { MdEdit, MdEmail } from 'react-icons/md'
 import ButtonDeleteTransaction from '../Custom/ButtonDeleteTransaction.component'
 import { useAuth } from '../../hooks/Auth.hook'
@@ -9,10 +9,12 @@ import { allOriginis, cartegorysDefault } from '../../contexts/transactions.cont
 import { AllMoney } from '../../contexts/money.context'
 import { useNavigate } from 'react-router-dom'
 import ButtonOcultarTransaction from '../Custom/ButtonOcultarTransaction.component'
+import { useTranslation } from 'react-i18next'
 
 const CardTransaction: React.FC<{ transaction: Transaccion }> = ({ transaction }) => {
   const { user } = useAuth()
   const navigate = useNavigate()
+  const { t } = useTranslation()
   const options: Intl.DateTimeFormatOptions = { month: 'long', day: 'numeric', year: 'numeric' }
 
   const categoriaInfo = user?.categoria.find((cat) => cat.nombre === transaction.categoria) ?? cartegorysDefault[0]
@@ -65,9 +67,11 @@ const CardTransaction: React.FC<{ transaction: Transaccion }> = ({ transaction }
         <div className=' justify-start flex' >
               <ButtonDeleteTransaction transaction={transaction} />
               { transaction.visibilidad &&
-              <IconButton onClick={() => { navigate(`/transaction/${transaction.id}`) }}>
-                <MdEdit/>
-              </IconButton> }
+              <Tooltip title={t('comon.transaction.button-edit')} >
+                  <IconButton onClick={() => { navigate(`/transaction/${transaction.id}`) }}>
+                    <MdEdit/>
+                </IconButton>
+              </Tooltip> }
               <ButtonOcultarTransaction transaction={transaction} />
         </div>
         <p className={`mt-2 text-sm text-gray-400 dark:text-gray-200 font-bold text-end w-full pr-3 duration-200 ${transaction.visibilidad ? '' : 'opacity-30'}`} >

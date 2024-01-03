@@ -24,7 +24,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   React.useEffect(() => {
     if (authState === true) {
-      userService.getListener(getUserId(), setUser)
+      return userService.getListener(getUserId(), setUser)
     }
   }, [authState])
 

@@ -103,11 +103,27 @@
         }
     },
     "auth":{
+        "title": {
+            "head-1": "organize",
+            "head-2": "your",
+            "head-3": "finances",
+            "head-4": "today!",
+            "phrase-1": "Finance for",
+            "phrase-2": "Disorganized"
+        },
+        "baner":{
+            "head-1": "no cards",
+            "head-2": "only with your email",
+            "word-1": "organize",
+            "word-2": "save",
+            "word-3": "invest"
+        },
         "welcome":"welcome",
         "terms":"terms and Conditions",
         "google":"continue with google"
     },
     "tab-1":{
+        "reaload":"reload",
         "gasto":"Spending limit",
         "loading-transactions":"loading transactions",
         "last-transactions":"Lasts transactions",

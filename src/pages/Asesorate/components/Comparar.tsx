@@ -20,7 +20,7 @@ const Comparar: React.FC<PropsComp> = ({ tasa, ganancia }) => {
                 {tasa !== undefined && adapterNumberString(tasa.tasa)}%
             </div>
             <div className="font-semibold uppercase text-center mb-3" >
-                {t('tab-4comparar.target')}
+                {t('tab-4.comparar.target')}
             </div>
             <div className="text-xl h-16 table w-full text-center" >
                 <div className="table-cell align-middle " >

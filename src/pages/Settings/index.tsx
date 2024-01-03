@@ -6,7 +6,7 @@ import CustomInput from '../../components/Custom/CustomInput.component'
 import { generateArray } from '../../utilities/array.utilites'
 import { MenuItem } from '@mui/material'
 import { useAuth } from '../../hooks/Auth.hook'
-import LanguageButton from '../../components/languageButton.component'
+import LanguageButton from '../../components/LanguageButton.component'
 
 const arrayDays = generateArray(28)
 

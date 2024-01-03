@@ -16,7 +16,7 @@ const getMonth = (page: number) => {
   return correntMonth
 }
 
-const getTransactions = async (mas: number, currentMonth: number, user: Usuario, fun: (data: Transaccion[]) => void) => {
+const getTransactions = (mas: number, currentMonth: number, user: Usuario, fun: (data: Transaccion[]) => void) => {
   const tranformMont = currentMonth - mas
   return transactionService.getWithMonthIntervalListener(getUserId(), user.diaInicial, tranformMont, 'desc', fun)
 }
@@ -59,17 +59,17 @@ const HistorialPage: React.FC = () => {
   }
   React.useEffect(() => {
     if (next === undefined && user !== undefined) {
-      void getTransactions(1, getMonth(getPage()), user, setNext)
+      return getTransactions(1, getMonth(getPage()), user, setNext)
     }
   }, [next, user])
   React.useEffect(() => {
     if (prev === undefined && user !== undefined) {
-      void getTransactions(-1, getMonth(getPage()), user, setPrev)
+      return getTransactions(-1, getMonth(getPage()), user, setPrev)
     }
   }, [prev, user])
   React.useEffect(() => {
     if (current === undefined && user !== undefined) {
-      void getTransactions(0, getMonth(getPage()), user, setCurrent)
+      return getTransactions(0, getMonth(getPage()), user, setCurrent)
     }
   }, [current, user])
 

@@ -54,7 +54,7 @@ const Grafic2Change: React.FC<{ transactions?: Transaccion[], limiteGasto?: Limi
           {t(`tab-3.${grafics[grafic].button}`)}
         </Button>
       </div>
-      <div className='text-center uppercase underline font-black mb-5' >
+      <div className='text-center text-xl uppercase underline font-black mb-5' >
         {monthInfo.month} {monthInfo.year}
       </div>
       <div>

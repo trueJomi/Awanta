@@ -14,8 +14,8 @@ import {
 import { type Tasa } from '../../../models/Tasa.model'
 import { Line } from 'react-chartjs-2'
 import { getMonthStringCurrent } from '../../../utilities/month.utilities'
-import { type SuportDataBar } from '../../../models/utils/BarGrafic.model'
 import { useTranslation } from 'react-i18next'
+import { type GraficBarModel } from '../../../models/utils/BarGrafic.model'
 Chart.register(
   Title,
   Legend,
@@ -33,17 +33,17 @@ interface PropsBarComp {
 
 const BarCompare: React.FC<PropsBarComp> = ({ tasas, inicial }) => {
   const { i18n } = useTranslation()
-  const [data, setData] = React.useState<SuportDataBar[]>([
+  const [data, setData] = React.useState<GraficBarModel[]>([
     {
-      label: [],
+      labels: [],
       data: []
     },
     {
-      label: [],
+      labels: [],
       data: []
     },
     {
-      label: [],
+      labels: [],
       data: []
     }
   ])
@@ -52,7 +52,7 @@ const BarCompare: React.FC<PropsBarComp> = ({ tasas, inicial }) => {
 
   const [config, setConfig] = React.useState<ChartData<'line', Array<number | Point>, unknown>>(
     {
-      labels: data[0].label,
+      labels: data[0].labels,
       datasets: [{
         label: tasas[0].nombre,
         data: data[0].data,
@@ -95,9 +95,9 @@ const BarCompare: React.FC<PropsBarComp> = ({ tasas, inicial }) => {
   }
 
   const createData = () => {
-    const dataTotal: SuportDataBar[] = tasas.map((taza) => {
-      const dataTemp: SuportDataBar = {
-        label: [],
+    const dataTotal: GraficBarModel[] = tasas.map((taza) => {
+      const dataTemp: GraficBarModel = {
+        labels: [],
         data: []
       }
       for (let plazo = 0; plazo < 13; plazo++) {
@@ -105,7 +105,7 @@ const BarCompare: React.FC<PropsBarComp> = ({ tasas, inicial }) => {
         const finalV = fixed(interesCompuesto(tazaMesual, plazo))
         const mes = getMonthStringCurrent(plazo, i18n.language)
         dataTemp.data.push(finalV)
-        dataTemp.label.push(mes)
+        dataTemp.labels.push(mes.month)
       }
       return dataTemp
     })
@@ -116,7 +116,7 @@ const BarCompare: React.FC<PropsBarComp> = ({ tasas, inicial }) => {
   React.useEffect(() => {
     if (sizeWindow > 1280) {
       setConfig({
-        labels: data[0].label,
+        labels: data[0].labels,
         datasets: [{
           label: tasas[0].nombre,
           data: data[0].data,
@@ -142,7 +142,7 @@ const BarCompare: React.FC<PropsBarComp> = ({ tasas, inicial }) => {
       })
     } else {
       setConfig({
-        labels: data[0].label,
+        labels: data[0].labels,
         datasets: [{
           label: tasas[0].nombre,
           data: data[0].data,

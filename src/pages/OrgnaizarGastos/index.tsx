@@ -2,7 +2,7 @@ import React, { useMemo, useState } from 'react'
 import { type Transaccion } from '../../models/Transaccion.model'
 import { type Categoria } from '../../models/Categoria.model'
 import { useServiceModal } from '../../hooks/Modal.hook'
-import ModalAddCattegory from './components/ModalAddCattegory'
+import ModalAddCattegory from './components/ModalAddCattegory.component'
 import { filtroVisivility } from '../../utilities/filters.utilities'
 
 import './organizate.css'
@@ -17,11 +17,12 @@ import { MdAdd, MdNavigateBefore, MdNavigateNext } from 'react-icons/md'
 import { DndContext, DragOverlay, type DragOverEvent, useSensors, useSensor, MouseSensor, TouchSensor, type DragStartEvent, type DragEndEvent } from '@dnd-kit/core'
 import { arrayMove } from '@dnd-kit/sortable'
 import { createPortal } from 'react-dom'
-import CatergoryColum from './components/CatergoryColum.component'
+import CatergoryColum from './components/CategoryColum.component'
 import DragbleTransaction from './components/DragbleTranactions.component'
 import { type Usuario } from '../../models/Usuario.model'
 import { useSearchParams } from 'react-router-dom'
 import { getMonthStringCurrent } from '../../utilities/month.utilities'
+import CatergoryColumMovil from './components/CategoryColumMovil.component'
 
 const transactionService = new TransactionService()
 
@@ -31,7 +32,7 @@ const getMonth = (page: number) => {
   return correntMonth
 }
 
-const getTransactions = async (mas: number, currentMonth: number, user: Usuario, fun: (data: Transaccion[]) => void) => {
+const getTransactions = (mas: number, currentMonth: number, user: Usuario, fun: (data: Transaccion[]) => void) => {
   const tranformMont = currentMonth - mas
   return transactionService.getWithMonthIntervalListener(getUserId(), user.diaInicial, tranformMont, 'desc', (t) => {
     const dataFiltred = t.filter(filtroVisivility)
@@ -49,6 +50,8 @@ const OrganizarGastosPage: React.FC = () => {
   const [nextTransactions, setNextTransactions] = React.useState<Transaccion[] | undefined>(undefined)
   const [currentTransactions, setCurrentTransactions] = useState<Transaccion[] | undefined>(undefined)
   const [categoryDelete, setCategoryDelete] = useState<Categoria | undefined>(undefined)
+  const [width, setWidth] = useState(window.innerWidth)
+
   const page = useMemo(() => {
     const page = searchParams.get('page')
     if (page === null) {
@@ -146,19 +149,28 @@ const OrganizarGastosPage: React.FC = () => {
       })
     }
   }
+
+  const handleResize = () => {
+    setWidth(window.innerWidth)
+  }
+
+  React.useEffect(() => {
+    window.addEventListener('resize', handleResize)
+  }, [])
+
   React.useEffect(() => {
     if (user !== undefined) {
-      void getTransactions(1, getMonth(page), user, setNextTransactions)
+      return getTransactions(1, getMonth(page), user, setNextTransactions)
     }
   }, [user])
   React.useEffect(() => {
     if (user !== undefined) {
-      void getTransactions(0, getMonth(page), user, setCurrentTransactions)
+      return getTransactions(0, getMonth(page), user, setCurrentTransactions)
     }
   }, [user])
   React.useEffect(() => {
     if (user !== undefined) {
-      void getTransactions(-1, getMonth(page), user, setPrevTransactions)
+      return getTransactions(-1, getMonth(page), user, setPrevTransactions)
     }
   }, [user])
   return (
@@ -186,12 +198,19 @@ const OrganizarGastosPage: React.FC = () => {
                 >
                     {(currentTransactions !== undefined && user !== undefined) &&
                     obtainAllByCategory(currentTransactions, user?.categoria).map((columData) => (
-                        <CatergoryColum
+                      width > 640
+                        ? <CatergoryColum
                             key ={columData.category.nombre}
                             categoria={columData.category}
                             transactions={columData.data}
                             setCategoryDelete={setCategoryDelete}
                         />
+                        : <CatergoryColumMovil
+                            key ={columData.category.nombre}
+                            categoria={columData.category}
+                            transactions={columData.data}
+                            setCategoryDelete={setCategoryDelete}
+                          />
                     ))}
                   { createPortal(
                       <DragOverlay>
