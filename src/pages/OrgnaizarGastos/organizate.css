@@ -1,0 +1,22 @@
+.detailsGastos > summary::-webkit-details-marker {
+    display: none;
+}
+   
+.detailsGastos > summary {
+    list-style: none;
+    cursor: pointer;
+    position: relative;
+}
+.detailsGastos > summary::before {
+    content: "+";
+    position: relative;
+    left: 5px;
+    font-size: 1.15rem;
+}   
+
+.detailsGastos[open] > summary::before {
+    content: "-";
+    position: relative;
+    left: 5px;
+    font-size: 1.15rem;
+}

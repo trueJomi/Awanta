@@ -1,0 +1,43 @@
+@font-face {
+  font-family: Notos-Regular;
+  src: url("/fonts/NotoSans-Regular.ttf") format("opentype");
+  font-display: auto;
+  unicode-range: U+000-5FF;
+}
+
+@font-face {
+  font-family: Romance;
+  src: url("./assets/fonts/romance.ttf") format("opentype");
+  font-display: auto;
+  unicode-range: U+000-5FF;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  @apply text-main-brown dark:bg-black dark:text-main-white font-Noto box-border
+}
+
+button:hover{
+  filter: brightness(0.8)
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+.subtitles{
+  @apply font-bold text-lg my-2
+}
+
+input[type=number] { -moz-appearance:textfield; }

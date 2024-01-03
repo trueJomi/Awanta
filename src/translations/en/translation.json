@@ -1,0 +1,155 @@
+{
+    "layout":{
+        "tab-1":"home",
+        "tab-2":"organize",
+        "tab-3":"history",
+        "tab-4":"advise",
+        "tab-5":"community",
+        "button-add":"add expense"
+    },
+    "comon":{
+        "mixer-grafic":"total",
+        "modalSecure":{
+            "title-alert":"alert",
+            "button-delete":"eliminate",
+            "button-cancel":"Cancel"
+        },
+        "transaction":{
+            "filter-all":"ALL",
+            "filter-bank":"filter by bank",
+            "order-by":"order by",
+            "filters":{
+                "date": "date",
+                "amount": "amount"
+            },
+            "button-delete":"delete",
+            "button-edit":"edit",
+            "button-hide":"hide",
+            "button-show":"show",
+            "empty":"no transactions",
+            "input-amount":"amount",
+            "input-date":"Date",
+            "input-description":"Description",
+            "input-origin":"origins",
+            "input-category":"Category",
+            "button-save":"save"
+        },
+        "loading":"charging",
+        "user":{
+            "header":"user",
+            "input-name":"name",
+            "input-lastname":"lastname",
+            "input-email":"mail",
+            "input-origin":"provider"
+        },
+        "settings":{
+            "header":"settings",
+            "init-day":"initial day",
+            "dark-mode":"dark mode"
+        },
+        "laguaje":{
+            "input-select":"language",
+            "items":{
+                "en":"english",
+                "es":"spanish"
+            }
+        }
+    },
+    "subscribe":{
+        "button-init":"start",
+        "text-part1":"subscribe to",
+        "text-part2":"and manage your finances",
+        "button-enviar":"Login Here"
+    },
+    "terms":{
+        "read":"i have read the terms, conditions and privacy policies",
+        "conditions":{
+            "name":"Use Conditions",
+            "text-title1":"Use of the web application",
+            "text-body1":"By using this web application, the user accepts the terms and conditions set forth below.",
+            "text-title2":"Using the Gmail API",
+            "text-body2":"The web application uses the Gmail API to access the user's bank transaction messages. By using this web application, the user consents to the application accessing their Gmail account and retrieving the necessary messages.",
+            "text-title3":"Access to financial information",
+            "text-body3":"The web application will obtain financial information from the user through bank transaction messages. The application does not store or share this financial information with third parties, except as necessary to provide services related to the application.",
+            "text-title4":"finance organization",
+            "text-body4":"The web application aims to help the user to organize their finances automatically through the use of graphs, filters and other tools. However, the application does not guarantee the accuracy of the financial information or the effectiveness of the tools used to organize the user's finances.",
+            "text-title5":"security of the information",
+            "text-body5":"The web application is committed to protecting the privacy and security of user information. The application uses appropriate security measures to protect user information, but cannot guarantee the complete security of the information.",
+            "text-title6":"intellectual property",
+            "text-body6":"The web application is the property of its creators and is protected by applicable intellectual property laws. The user may not reproduce, distribute, modify or create derivative works of the application without the express consent of its creators.",
+            "text-title7":"Modifications of the terms and conditions",
+            "text-body7":"The web application reserves the right to modify these terms and conditions at any time without prior notice. Your continued use of the app after any modification constitutes acceptance of the modified terms and conditions.",
+            "text-title8":"limited liability",
+            "text-body8":"The web application will not be liable for any direct, indirect, incidental, special or consequential damages arising from the use of the application, including, but not limited to, damages for loss of income or profits, business interruption, loss of information or any other type of financial loss.",
+            "text-title9":"applicable law",
+            "text-body9":"These terms and conditions will be governed by and construed in accordance with applicable laws. Any dispute related to these terms and conditions will be resolved by binding arbitration in accordance with the rules of the International Chamber of Commerce.",
+            "button":"By using the web application, the user accepts these terms and conditions. If the user does not agree to these terms and conditions, they should not use the application.",
+            "update":"Last update: 24/03/2023"
+        },
+        "politics":{
+            "name":"Privacy Policies",
+            "text-title":"Thank you for using our email banking application. We are committed to protecting your privacy and the security of your personal data. This privacy policy explains how we collect, use and share your information when you use our application.",
+            "text-title1":"Collection and use of information",
+            "text-body1":" We collect your email address and other information related to your bank account and financial transactions in order to provide our services to you. We use this information to manage your banking transactions and keep your account current. We may also use your email address to send you notifications about your transactions or to send you special offers and promotions from our partners and affiliates.",
+            "text-title2":"Share information",
+            "text-body2":"We do not share your personal information with third parties, except as necessary to comply with an applicable law, regulation or legal request. We may also share your information with our parent companies, subsidiaries, affiliates, and service providers who help us provide our services.",
+            "text-title3":"security",
+            "text-body3":"We take steps to protect your personal information from loss, theft, unauthorized access, disclosure, misuse and misuse. We use appropriate physical and electronic security measures and procedures to ensure the security of your information.",
+            "text-title4":"Changes to our privacy policy",
+            "text-body4":"We reserve the right to change this privacy policy at any time. Changes will take effect immediately after they are posted in our app. We recommend that you review our privacy policy periodically to be informed of any changes.",
+            "text-title5":"Contact Us",
+            "text-body5":"If you have questions or comments about this privacy policy, please contact us at the email address: \"awanta.app@gmail.com\" and at the number: +51 968538405.",
+            "update":"Last update: 24/03/2023"
+        }
+    },
+    "auth":{
+        "welcome":"welcome",
+        "terms":"terms and Conditions",
+        "google":"continue with google"
+    },
+    "tab-1":{
+        "gasto":"Spending limit",
+        "loading-transactions":"loading transactions",
+        "last-transactions":"Lasts transactions",
+        "modal":{
+            "title":"Change your spending limit",
+            "input-meta":"Spending limit",
+            "button-acept":"save spending limit",
+            "button-cancel":"cancel"
+        }
+    },
+    "tab-2":{
+        "add":"add category",
+        "alert-p1":"Keep in mind that you are deleting the category",
+        "alert-p2":"all transactions in this category will be moved to",
+        "alert-p3":"Are you sure to delete this category?",
+        "modal":{
+            "title-modal":"create new category",
+            "button-acept":"new category.",
+            "button-cancel":"Cancel",
+            "input-category":"Category Name",
+            "input-color":"Selection of a color"
+        }
+    },
+    "tab-3":{
+        "button-category":"by category",
+        "button-time":"time line",
+        "button-next":"next",
+        "button-pre":"previous"
+    },
+    "tab-4":{
+        "title":"profitability between savings accounts",
+        "bank":"bank",
+        "input-money":"Init money",
+        "comparar":{
+            "title":"interest rate",
+            "target":"card",
+            "next":"maintenance",
+            "ganancia":"revenue"
+        }
+    },
+    "tab-5":{
+        "hi":"Hi",
+        "title":"Profiles to follow to improve your finances"
+    }
+}

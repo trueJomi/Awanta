@@ -1,0 +1,155 @@
+{
+    "layout":{
+        "tab-1":"inicio",
+        "tab-2":"organizate",
+        "tab-3":"historial",
+        "tab-4":"asesorate",
+        "tab-5":"comunidad",
+        "button-add":"añadir gasto"
+    },
+    "comon":{
+        "mixer-grafic":"total",
+        "modalSecure":{
+            "title-alert":"alerta cuidado",
+            "button-delete":"eliminar",
+            "button-cancel":"cancelar"
+        },
+        "transaction":{
+            "filter-all":"TODO",
+            "filter-bank":"fintrar por banco",
+            "order-by":"ordenar por",
+            "filters":{
+                "date": "fecha",
+                "amount": "cantidad"
+            },
+            "button-delete":"eliminar",
+            "button-edit":"editar",
+            "button-hide":"ocultar",
+            "button-show":"mostrar",
+            "empty":"no hay transacciones",
+            "input-amount":"cantidad",
+            "input-date":"Fecha",
+            "input-description":"Descipción",
+            "input-origin":"Origen",
+            "input-category":"Categoria",
+            "button-save":"guardar"
+        },
+        "loading":"cargando",
+        "user":{
+            "header":"usuario",
+            "input-name":"nombre",
+            "input-lastname":"apellidos",
+            "input-email":"correo",
+            "input-origin":"proveedor"
+        },
+        "settings":{
+            "header":"configuración",
+            "init-day":"dia incial",
+            "dark-mode":"modo oscuro"
+        },
+        "laguaje":{
+            "input-select":"lenguaje",
+            "items":{
+                "en":"ingles",
+                "es":"español"
+            }
+        }
+    },
+    "subscribe":{
+        "button-init":"inicia aqui",
+        "text-part1":"Suscribete a",
+        "text-part2":"y gestiona tus finazas",
+        "button-enviar":"Inicia sesión Aqui"
+    },
+    "terms":{
+        "read":"he leído los términos, condiciones y políticas de privacidad",
+        "conditions":{
+            "name":"Condiciones de Uso",
+            "text-title1":"Uso de la aplicación web",
+            "text-body1":"Al utilizar esta aplicación web, el usuario acepta los términos y condiciones establecidos a continuación.",
+            "text-title2":"Uso del API de Gmail",
+            "text-body2":"La aplicación web utiliza el API de Gmail para acceder a los mensajes de transacciones bancarias del usuario. Al utilizar esta aplicación web, el usuario da su consentimiento para que la aplicación acceda a su cuenta de Gmail y recupere los mensajes necesarios.",
+            "text-title3":"Acceso a información financiera",
+            "text-body3":"La aplicación web obtendrá información financiera del usuario a través de los mensajes de transacciones bancarias. La aplicación no almacena ni comparte esta información financiera con terceros, excepto cuando sea necesario para proporcionar servicios relacionados con la aplicación.",
+            "text-title4":"Organización de finanzas",
+            "text-body4":"La aplicación web tiene como objetivo ayudar al usuario a organizar sus finanzas de manera automática mediante el uso de gráficos, filtros y otras herramientas. Sin embargo, la aplicación no garantiza la exactitud de la información financiera o la eficacia de las herramientas utilizadas para organizar las finanzas del usuario.",
+            "text-title5":"Seguridad de la información",
+            "text-body5":"La aplicación web se compromete a proteger la privacidad y seguridad de la información del usuario. La aplicación utiliza medidas de seguridad adecuadas para proteger la información del usuario, pero no puede garantizar la seguridad completa de la información.",
+            "text-title6":"Propiedad intelectual",
+            "text-body6":"La aplicación web es propiedad de sus creadores y está protegida por las leyes de propiedad intelectual aplicables. El usuario no puede reproducir, distribuir, modificar o crear obras derivadas de la aplicación sin el consentimiento expreso de sus creadores.",
+            "text-title7":"Modificaciones de los términos y condiciones",
+            "text-body7":"La aplicación web se reserva el derecho de modificar estos términos y condiciones en cualquier momento sin previo aviso. El uso continuado de la aplicación después de cualquier modificación constituye la aceptación de los términos y condiciones modificados.",
+            "text-title8":"Responsabilidad limitada",
+            "text-body8":"La aplicación web no será responsable de ningún daño directo, indirecto, incidental, especial o consecuente que surja del uso de la aplicación, incluyendo, entre otros, daños por pérdida de ingresos o beneficios, interrupción de negocios, pérdida de información o cualquier otro tipo de pérdida financiera.",
+            "text-title9":"Ley aplicable",
+            "text-body9":"Estos términos y condiciones se regirán e interpretarán de acuerdo con las leyes aplicables. Cualquier disputa relacionada con estos términos y condiciones se resolverá mediante un arbitraje vinculante de conformidad con las normas de la Cámara de Comercio Internacional.",
+            "button":"Al utilizar la aplicación web, el usuario acepta estos términos y condiciones. Si el usuario no está de acuerdo con estos términos y condiciones, no debe utilizar la aplicación.",
+            "update":"Última actualización: 24/03/2023"
+        },
+        "politics":{
+            "name":"Politicas de Privacidad",
+            "text-title":"Gracias por usar nuestra aplicación de gestión de transacciones bancarias con correo electrónico. Estamos comprometidos con la protección de su privacidad y la seguridad de sus datos personales. Esta política de privacidad explica cómo recopilamos, utilizamos y compartimos su información cuando utiliza nuestra aplicación.",
+            "text-title1":"Recopilación y uso de la información",
+            "text-body1":" Recopilamos su dirección de correo electrónico y otra información relacionada con su cuenta bancaria y transacciones financieras para poder proporcionarle nuestros servicios. Utilizamos esta información para gestionar sus transacciones bancarias y mantener su cuenta actualizada. También podemos utilizar su dirección de correo electrónico para enviarle notificaciones sobre sus transacciones o para enviarle ofertas y promociones especiales de nuestros socios y afiliados.",
+            "text-title2":"Compartir información",
+            "text-body2":"No compartimos su información personal con terceros, excepto cuando sea necesario para cumplir con una ley, regulación o solicitud legal aplicable. También podemos compartir su información con nuestras empresas matrices, subsidiarias, afiliados y proveedores de servicios que nos ayudan a proporcionar nuestros servicios.",
+            "text-title3":"Seguridad",
+            "text-body3":"Tomamos medidas para proteger su información personal contra la pérdida, el robo, el acceso no autorizado, la divulgación, la alteración y el uso indebido. Utilizamos medidas de seguridad físicas, electrónicas y procedimentales adecuadas para garantizar la seguridad de su información.",
+            "text-title4":"Cambios en nuestra política de privacidad",
+            "text-body4":"Nos reservamos el derecho de cambiar esta política de privacidad en cualquier momento. Los cambios entrarán en vigencia inmediatamente después de su publicación en nuestra aplicación. Le recomendamos que revise nuestra política de privacidad periódicamente para estar informado de cualquier cambio.",
+            "text-title5":"Contáctenos",
+            "text-body5":"Si tiene preguntas o comentarios sobre esta política de privacidad, contáctenos a través de la dirección de correo electrónico: \"awuanta.pe@gmail.com\" y al numero: +51 968538405 .",
+            "update":"Última actualización: 24/03/2023"
+        }
+    },
+    "auth":{
+        "welcome":"inicia aqui",
+        "terms":"terminos y condiciones",
+        "google":"continua con Google"
+    },
+    "tab-1":{
+        "gasto":"Limite de Gastos",
+        "loading-transactions":"cargando transacciones",
+        "last-transactions":"ultimas transacciones", 
+        "modal":{
+            "title":"Cambia tu limite de gasto",
+            "input-meta":"Limite de Gastos",
+            "button-acept":"guardar Limite de gasto",
+            "button-cancel":"cancelar"
+        }
+    },
+    "tab-2":{
+        "add":"añadir categoria",
+        "alert-p1":"Ten en cuaenta que esta elminando la categoria",
+        "alert-p2":"todas las transacciones en esta categoria se moveran a",
+        "alert-p3":"estas segruo de eliminar esta categoria?",
+        "modal":{
+            "title-modal":"crea nueva categoria",
+            "button-acept":"nueva categoria",
+            "button-cancel":"cancelar",
+            "input-category":"Nombre de Categoria",
+            "input-color":"Selecione un color"
+        }
+    },
+    "tab-3":{
+        "button-category":"por categoria",
+        "button-time":"tine de tiempo",
+        "button-next":"siguiente",
+        "button-pre":"anterior"
+    },
+    "tab-4":{
+        "title":"rentabilidad entre cuentas de ahorro",
+        "bank":"banco",
+        "input-money":"Dinero inicial",
+        "comparar":{
+            "title":"Tasa de interes",
+            "target":"tarjeta",
+            "next":"manteniminto",
+            "ganancia":"ganancia"
+        }
+    },
+    "tab-5":{
+        "hi":"Hola",
+        "title":"Perfiles a seguir para mejorar tus finanzas"
+    }
+}
