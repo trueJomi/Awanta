@@ -144,6 +144,10 @@ dist
 .storybook-out
 storybook-static
 
+.firebase
+
+.dev-dist
+
 # rollup.js default build output
 dist/
 
