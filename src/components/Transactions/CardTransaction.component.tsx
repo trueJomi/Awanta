@@ -66,13 +66,13 @@ const CardTransaction: React.FC<{ transaction: Transaccion }> = ({ transaction }
       <CardActions >
         <div className=' justify-start flex' >
               <ButtonDeleteTransaction transaction={transaction} />
+              <ButtonOcultarTransaction transaction={transaction} />
               { transaction.visibilidad &&
               <Tooltip title={t('comon.transaction.button-edit')} >
                   <IconButton onClick={() => { navigate(`/transaction/${transaction.id}`) }}>
                     <MdEdit/>
                 </IconButton>
               </Tooltip> }
-              <ButtonOcultarTransaction transaction={transaction} />
         </div>
         <p className={`mt-2 text-sm text-gray-400 dark:text-gray-200 font-bold text-end w-full pr-3 duration-200 ${transaction.visibilidad ? '' : 'opacity-30'}`} >
               {transaction.fecha.toLocaleDateString('es-PE', options)}

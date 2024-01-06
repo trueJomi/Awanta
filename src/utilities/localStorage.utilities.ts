@@ -22,3 +22,12 @@ export const setLocalStorageObject = (accessToken: string, refreshToken: string,
     expirationDate: expirationDate.toString()
   }))
 }
+
+export const getCurrentTheme = (): 'light' | 'dark' | null => {
+  const theme = localStorage.getItem('theme') as 'light' | 'dark' | null
+  return theme
+}
+
+export const setCurrentTheme = (theme: 'light' | 'dark') => {
+  localStorage.setItem('theme', theme)
+}

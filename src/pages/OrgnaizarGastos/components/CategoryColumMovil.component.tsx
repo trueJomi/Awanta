@@ -10,6 +10,7 @@ import { Accordion, AccordionDetails, AccordionSummary, IconButton, Tooltip } fr
 import { MdDelete, MdExpandMore } from 'react-icons/md'
 import { useServiceModal } from '../../../hooks/Modal.hook'
 import EmptyCategory from './EmptyCategory.component'
+import { adapterNumberString } from '../../../adapters/Numbers.adapter'
 
 interface PropsColum {
   transactions: Transaccion[]
@@ -59,7 +60,7 @@ const CatergoryColumMovil: React.FC<PropsColum> = ({ transactions, categoria, se
                     className='text-lg font-black mx-auto'
                     style={{ color: adaptativeColorText(categoria.color) }}
                 >
-                    S/ {sumaCantidad(transactions)}
+                    S/ {adapterNumberString(sumaCantidad(transactions))}
                 </h1>
                 {categoria.nombre !== 'consumo' &&
                   <div className=' absolute top-1 left-1' >

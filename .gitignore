@@ -144,12 +144,13 @@ dist
 .storybook-out
 storybook-static
 
-.firebase
+dev-dist
 
-.dev-dist
+.firebase/
 
 # rollup.js default build output
 dist/
+dev-dist/
 
 # Gatsby files
 .cache/
@@ -174,7 +175,7 @@ dist/
 
 # Stores VSCode versions used for testing VSCode extensions
 .vscode-test
-.vscode
+.vscode/
 
 # Temporary folders
 tmp/

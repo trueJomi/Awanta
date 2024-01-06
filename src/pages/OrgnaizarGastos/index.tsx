@@ -165,9 +165,9 @@ const OrganizarGastosPage: React.FC = () => {
   }, [user, nextTransactions])
   React.useEffect(() => {
     if (user !== undefined) {
-      return getTransactions(0, getMonth(page), user, setCurrentTransactions)
+      getTransactions(0, getMonth(page), user, setCurrentTransactions)
     }
-  }, [user, currentTransactions])
+  }, [user])
   React.useEffect(() => {
     if (user !== undefined) {
       return getTransactions(-1, getMonth(page), user, setPrevTransactions)

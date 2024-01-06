@@ -68,10 +68,10 @@ const HistorialPage: React.FC = () => {
     }
   }, [prev, user])
   React.useEffect(() => {
-    if (current === undefined && user !== undefined) {
+    if (user !== undefined) {
       return getTransactions(0, getMonth(getPage()), user, setCurrent)
     }
-  }, [current, user])
+  }, [user])
 
   return (
       <HistorialUI
