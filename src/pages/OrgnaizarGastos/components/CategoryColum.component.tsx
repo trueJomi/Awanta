@@ -10,6 +10,7 @@ import { IconButton, Tooltip } from '@mui/material'
 import { MdDelete } from 'react-icons/md'
 import { useServiceModal } from '../../../hooks/Modal.hook'
 import EmptyCategory from './EmptyCategory.component'
+import { adapterNumberString } from '../../../adapters/Numbers.adapter'
 
 interface PropsColum {
   transactions: Transaccion[]
@@ -58,7 +59,7 @@ const CatergoryColum: React.FC<PropsColum> = ({ transactions, categoria, setCate
                     className='text-lg font-black'
                     style={{ color: adaptativeColorText(categoria.color) }}
                 >
-                S/ {sumaCantidad(transactions)}
+                S/ {adapterNumberString(sumaCantidad(transactions))}
                 </div>
                 {categoria.nombre !== 'consumo' &&
                   <div className=' absolute top-1 right-1' >

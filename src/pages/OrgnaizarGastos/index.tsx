@@ -162,29 +162,33 @@ const OrganizarGastosPage: React.FC = () => {
     if (user !== undefined) {
       return getTransactions(1, getMonth(page), user, setNextTransactions)
     }
-  }, [user])
+  }, [user, nextTransactions])
   React.useEffect(() => {
     if (user !== undefined) {
       return getTransactions(0, getMonth(page), user, setCurrentTransactions)
     }
-  }, [user])
+  }, [user, currentTransactions])
   React.useEffect(() => {
     if (user !== undefined) {
       return getTransactions(-1, getMonth(page), user, setPrevTransactions)
     }
-  }, [user])
+  }, [user, prevTransactions])
   return (
     <>
       <div className='relative overflow-auto h-[calc(100vh-10.8rem)] px-5' >
           <div className=' flex items-center justify-center font-bold' >
             <Tooltip title={t('tab-3.button-pre')} >
-              <IconButton onClick={goPrev}>
+              <IconButton
+               disabled={page === 1}
+               onClick={goPrev}>
                 <MdNavigateBefore/>
               </IconButton>
             </Tooltip>
             <h1 className=' mx-2 text-xl' >{getMonthStringCurrent(page, i18n.language).month} {getMonthStringCurrent(page, i18n.language).year}</h1>
             <Tooltip title={t('tab-3.button-next')} >
-              <IconButton onClick={goNext} >
+              <IconButton
+               disabled={!(nextTransactions !== undefined && nextTransactions.length !== 0)}
+               onClick={goNext} >
                 <MdNavigateNext/>
               </IconButton>
             </Tooltip>
