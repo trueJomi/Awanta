@@ -1,41 +1,24 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import { type Transaccion } from '../../../models/Transaccion.model'
 import { type Categoria } from '../../../models/Categoria.model'
-import { CSS } from '@dnd-kit/utilities'
-import { SortableContext, useSortable } from '@dnd-kit/sortable'
 import { adaptativeColorText } from '../../../utilities/color.utilities'
 import { sumaCantidad } from '../../../utilities/filters.utilities'
 import DragbleTransaction from './DragbleTranactions.component'
 import { Accordion, AccordionDetails, AccordionSummary, IconButton, Tooltip } from '@mui/material'
 import { MdDelete, MdExpandMore } from 'react-icons/md'
-import { useServiceModal } from '../../../hooks/Modal.hook'
 import EmptyCategory from './EmptyCategory.component'
 import { adapterNumberString } from '../../../adapters/Numbers.adapter'
+import { StrictModeDroppable } from './StrickModeDroppable'
+import { useModalDeleteCategoriaStore } from '../../../store/modal.store'
 
 interface PropsColum {
   transactions: Transaccion[]
   categoria: Categoria
-  setCategoryDelete: React.Dispatch<React.SetStateAction<Categoria | undefined>>
 }
 
-const CatergoryColumMovil: React.FC<PropsColum> = ({ transactions, categoria, setCategoryDelete }) => {
-  const transactionsIds = useMemo(() => {
-    return transactions.map((t) => t.id ?? '')
-  }, [transactions])
-  const { modalHistory } = useServiceModal()
-
-  const { setNodeRef, transform, transition } = useSortable({
-    id: categoria.nombre,
-    data: {
-      type: 'categoria',
-      categoria
-    }
-  })
-
-  const styleDnd = {
-    transition,
-    transform: CSS.Transform.toString(transform)
-  }
+const CatergoryColumMovil: React.FC<PropsColum> = ({ transactions, categoria }) => {
+  const [expanse, setExpanse] = React.useState(false)
+  const { setModal, setCategoria } = useModalDeleteCategoriaStore((state) => state)
 
   return (
     <div className='mr-5 w-full sm:w-72'>
@@ -43,18 +26,20 @@ const CatergoryColumMovil: React.FC<PropsColum> = ({ transactions, categoria, se
             {categoria.nombre}
         </h1>
         <Accordion
+          expanded={expanse}
           className='rounded-lg shadow-lg text-center'
           style={{
             backgroundColor: categoria.color
           }}
         >
             <AccordionSummary
-            expandIcon={<MdExpandMore className='text-xl' style={{ color: adaptativeColorText(categoria.color) }} />}
-            className='!text-lg uppercase font-bold mb-2 mx-2 py-2 relative'
-            style={{
-              color: adaptativeColorText(categoria.color),
-              borderColor: adaptativeColorText(categoria.color)
-            }}
+              onClick={() => { setExpanse(!expanse) }}
+              expandIcon={<MdExpandMore className='text-xl' style={{ color: adaptativeColorText(categoria.color) }} />}
+              className='!text-lg uppercase font-bold mb-2 mx-2 py-2 relative'
+              style={{
+                color: adaptativeColorText(categoria.color),
+                borderColor: adaptativeColorText(categoria.color)
+              }}
             >
                 <h1
                     className='text-lg font-black mx-auto'
@@ -68,33 +53,38 @@ const CatergoryColumMovil: React.FC<PropsColum> = ({ transactions, categoria, se
                       <IconButton
                       style={{ color: adaptativeColorText(categoria.color) }}
                       onClick={() => {
-                        setCategoryDelete(categoria)
-                        modalHistory.set(true)
+                        setCategoria(categoria)
+                        setModal(true)
                       }} >
                         <MdDelete/>
                       </IconButton>
                     </Tooltip>
                   </div>}
             </AccordionSummary>
-            <AccordionDetails
-              className='mt-2 py-2'
-            >
-                <div
-                 ref={setNodeRef}
-                 style={styleDnd}
-                >
-                    <SortableContext items={transactionsIds} >
-                        {transactions.length !== 0
-                          ? transactions.map((transaction) => (
-                            <DragbleTransaction
+            <AccordionDetails className='mt-2 py-2 ' >
+              {expanse &&
+                <StrictModeDroppable droppableId={categoria.nombre}>
+                  {(dropableProvider) => (
+                    <div
+                      className='space-y-2'
+                      ref={dropableProvider.innerRef}
+                      {...dropableProvider.droppableProps}
+                    >
+                      {transactions.length !== 0
+                        ? transactions.map((transaction, idx) => (
+                          <DragbleTransaction
+                            index={idx}
                             key={transaction.id}
                             transaction={transaction}
                             color={categoria.color}
-                            />
-                          ))
-                          : <EmptyCategory color={categoria.color} />}
-                    </SortableContext>
-                </div>
+                          />
+                        ))
+                        : <EmptyCategory color={categoria.color} />}
+                        {dropableProvider.placeholder}
+                  </div>
+                  )}
+                </StrictModeDroppable>
+              }
             </AccordionDetails>
         </Accordion>
     </div>

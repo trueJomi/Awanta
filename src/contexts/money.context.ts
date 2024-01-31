@@ -40,11 +40,11 @@ export const telefonos = [
   {
     name: 'COL',
     number: '57',
-    simbol: 10
+    digits: 10
   },
   {
     name: 'CL',
-    url: '56',
-    simbol: 9
+    number: '56',
+    digits: 9
   }
 ]

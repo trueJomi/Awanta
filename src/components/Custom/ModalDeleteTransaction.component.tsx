@@ -1,20 +1,24 @@
 import { Dialog, Transition } from '@headlessui/react'
 import React from 'react'
 import { MdWarning } from 'react-icons/md'
-import { useServiceModal } from '../../hooks/Modal.hook'
 import { useTranslation } from 'react-i18next'
+import { TransactionService } from '../../services/Transaction.service'
+import { getUserId } from '../../services/AuthFirebase.service'
+import { useModalTransactionsDeleteStore } from '../../store/modal.store'
 
-const ModalAlertSegure: React.FC<{ funtion: () => void, text: JSX.Element | string }> = ({ funtion, text }) => {
-  const { alertDelete } = useServiceModal()
+const transactionService = new TransactionService()
+
+const ModalAlertSegure: React.FC = () => {
+  const { setModal, getModal, transaction } = useModalTransactionsDeleteStore((state) => state)
   const { t } = useTranslation()
   const cancelButtonRef = React.useRef(null)
   const close = () => {
-    alertDelete.set(false)
+    setModal(false)
   }
 
   return (
-      <Transition.Root show={alertDelete.get} as={React.Fragment} >
-        <Dialog as="div" className="relative z-10" __demoMode initialFocus={cancelButtonRef} onClose={alertDelete.set}>
+      <Transition.Root show={getModal} as={React.Fragment} >
+        <Dialog as="div" className="relative z-10" __demoMode initialFocus={cancelButtonRef} onClose={setModal}>
           <Transition.Child
             as={React.Fragment}
             enter="ease-out duration-300"
@@ -49,7 +53,7 @@ const ModalAlertSegure: React.FC<{ funtion: () => void, text: JSX.Element | stri
                           {t('comon.modalSecure.title-alert')}
                         </Dialog.Title>
                         <div className="mt-2">
-                          {text}
+                        {t('comon.modalSecure.text')} <span className=' font-black text-red-500' >{transaction?.descripcion}</span> ?
                         </div>
                       </div>
                     </div>
@@ -57,10 +61,13 @@ const ModalAlertSegure: React.FC<{ funtion: () => void, text: JSX.Element | stri
                   <div className="bg-gray-50 dark:bg-gray-700 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
                     <button
                       type="button"
-                      className="inline-flex w-full uppercase justify-center rounded-xl bg-red-500 px-3 py-2 text-sm font-semibold text-white shadow-sm sm:ml-3 sm:w-auto"
+                      disabled={transaction === undefined}
+                      className="inline-flex w-full uppercase justify-center disabled:bg-gray-50 rounded-xl bg-red-500 px-3 py-2 text-sm font-semibold text-white shadow-sm sm:ml-3 sm:w-auto"
                       onClick={() => {
-                        funtion()
-                        close()
+                        if (transaction !== undefined) {
+                          void transactionService.delete(getUserId(), transaction.id)
+                          close()
+                        }
                       }}
                     >
                       {t('comon.modalSecure.button-delete')}

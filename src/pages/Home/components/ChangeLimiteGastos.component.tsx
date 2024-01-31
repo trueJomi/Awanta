@@ -1,18 +1,18 @@
 import React from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { MdCheckCircleOutline } from 'react-icons/md'
-import CustomInput from '../../../components/Custom/CustomInput.component'
 import { LimiteGastoService } from '../../../services/LimiteGastos.service'
 import { useAuth } from '../../../hooks/Auth.hook'
-import { useServiceModal } from '../../../hooks/Modal.hook'
 import { useTranslation } from 'react-i18next'
 import { type LimiteGastos } from '../../../models/LimiteGastos.model'
+import { useModalEditLimiteGastosStore } from '../../../store/modal.store'
+import MoneyInput from '../../../components/Custom/MoneyInput.componet'
 
 const limiteGastoService = new LimiteGastoService()
 
-const ChangeMeta: React.FC = () => {
+const ChangeLimiteGastos: React.FC = () => {
   const { user } = useAuth()
-  const { modalLimiteCompra } = useServiceModal()
+  const { setModal, getModal } = useModalEditLimiteGastosStore((state) => state)
   const [currentMeta, setCurrentMeta] = React.useState<number>(0)
   const { t } = useTranslation()
 
@@ -21,7 +21,7 @@ const ChangeMeta: React.FC = () => {
   }
 
   const close = () => {
-    modalLimiteCompra.set(false)
+    setModal(false)
   }
 
   const cancelButtonRef = React.useRef(null)
@@ -42,8 +42,8 @@ const ChangeMeta: React.FC = () => {
 
   return (
         <>
-          <Transition.Root show={modalLimiteCompra.get} as={React.Fragment} >
-            <Dialog as="div" className="relative z-10" initialFocus={cancelButtonRef} onClose={modalLimiteCompra.set}>
+          <Transition.Root show={getModal} as={React.Fragment} >
+            <Dialog as="div" className="relative z-10" initialFocus={cancelButtonRef} onClose={setModal}>
               <Transition.Child
                 as={React.Fragment}
                 enter="ease-out duration-300"
@@ -79,15 +79,10 @@ const ChangeMeta: React.FC = () => {
                               {t('tab-1.modal.title')}
                               </Dialog.Title>
                               <div className="mt-2">
-                                <CustomInput
+                                <MoneyInput
                                   name='meta'
                                   label={t('tab-1.modal.input-meta')}
-                                  type="number"
-                                  change={detectMeta}
-                                  inputProps={{
-                                    placeholder: '0.00',
-                                    startAdornment: <span className="mr-3" >S/</span>
-                                  }}
+                                  onChange={detectMeta}
                                   />
                               </div>
                             </div>
@@ -120,4 +115,4 @@ const ChangeMeta: React.FC = () => {
   )
 }
 
-export default ChangeMeta
+export default ChangeLimiteGastos

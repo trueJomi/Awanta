@@ -13,7 +13,8 @@ import CardTransaction from '../../../components/Transactions/CardTransaction.co
 import FilterTransacctions from '../../../components/Transactions/FilterTransacctions.component'
 import ListCardTransactionsEmpty from '../../../components/Squeletons/ListCardTransactionsEmpty.component'
 import { generateArray } from '../../../utilities/array.utilites'
-import { useGmail } from '../../../hooks/Gmail.hook'
+import { useGmailStore } from '../../../store/gmail.store'
+import { useModalEditLimiteGastosStore } from '../../../store/modal.store'
 
 interface PropsHomeUI {
   transactions5?: Transaccion[]
@@ -21,11 +22,11 @@ interface PropsHomeUI {
   currentTransactions?: Transaccion[]
   limiteGastos?: LimiteGastos
   transactions?: Transaccion[]
-  moveMetas: () => void
 }
 
-const HomeUI: React.FC<PropsHomeUI> = ({ transactions5, setTransations, limiteGastos, transactions, currentTransactions, moveMetas }) => {
-  const { setLoadingMessages, loadingMessages } = useGmail()
+const HomeUI: React.FC<PropsHomeUI> = ({ transactions5, setTransations, limiteGastos, transactions, currentTransactions }) => {
+  const { setModal } = useModalEditLimiteGastosStore((state) => state)
+  const { setLoadingMessages, loadingMessages } = useGmailStore((state) => state)
   const { user } = useAuth()
   const { t } = useTranslation()
   return (
@@ -47,12 +48,12 @@ const HomeUI: React.FC<PropsHomeUI> = ({ transactions5, setTransations, limiteGa
                         <div className='flex justify-center' >
                           <h1>{t('tab-1.gasto')}</h1>
                         </div>
-                        <div className=' flex justify-center items-center relative translate-x-7' >
+                        <div className=' flex justify-center items-center relative' >
                         {limiteGastos !== undefined
                           ? <><span className="mr-2" >S/</span>{adapterNumberString(limiteGastos?.cantidad)}</>
                           : <div className="h-6 my-2 animate-pulse bg-gray-300 backdrop-blur-md opacity-40 rounded-full w-24 inline-block"/>}
                           <IconButton
-                            onClick={moveMetas}
+                            onClick={() => { setModal(true) }}
                             className=' !bg-main-blue !ml-3 !text-main-white '
                             >
                                 <MdEdit/>
@@ -71,7 +72,7 @@ const HomeUI: React.FC<PropsHomeUI> = ({ transactions5, setTransations, limiteGa
                       <h1 className=' text-2xl font-bold uppercase' >{t('tab-1.last-transactions')}</h1>
                     </div>
                     <div className='max-w-[38rem] mx-auto' >
-                      <div className='flex' >
+                      <div className='flex w-full' >
                         <FilterTransacctions setTransactions={setTransations} transactions={transactions} />
                         <div className='pt-1' >
                           <Tooltip title={t('tab-1.reaload')}>
@@ -85,7 +86,7 @@ const HomeUI: React.FC<PropsHomeUI> = ({ transactions5, setTransations, limiteGa
                         </div>
                       </div>
                     </div>
-                    <div className="mt-5" >
+                    <div className="mt-5 space-y-4" >
                         { (transactions5 !== undefined)
                           ? transactions5.length !== 0
                             ? transactions5.map((item) => (

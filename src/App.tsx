@@ -5,7 +5,6 @@ import { AuthProvider } from './hooks/Auth.hook'
 import { GmailProvider } from './hooks/Gmail.hook'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { LocalizationProvider } from '@mui/x-date-pickers'
-import { ModalServiceProvider } from './hooks/Modal.hook'
 import { registerSW } from 'virtual:pwa-register'
 import { ThemeHook } from './hooks/Theme.hooks'
 
@@ -20,9 +19,7 @@ const App: React.FC = () => {
           <AuthProvider>
             <BrowserRouter>
               <GmailProvider>
-                <ModalServiceProvider>
                   <Routers/>
-                </ModalServiceProvider>
               </GmailProvider>
             </BrowserRouter>
           </AuthProvider>

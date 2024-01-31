@@ -5,10 +5,12 @@ import { getUserId } from '../../services/AuthFirebase.service'
 import { TransactionService } from '../../services/Transaction.service'
 import FormTransaction from '../../components/Transactions/FormTransacction.component'
 import LayoutReturn from '../../components/LayoutReturn.component'
+import { useCurrentTransactionStore } from '../../store/currentTransaction'
 
 const transactionService = new TransactionService()
 const EditTransaccionPage: React.FC = () => {
-  const [transaccion, setTransaccion] = React.useState<Transaccion | undefined>(undefined)
+  const { currentTransaction } = useCurrentTransactionStore((state) => state)
+  const [transaccion, setTransaccion] = React.useState<Transaccion | undefined>(currentTransaction)
   const { id } = useParams()
 
   React.useEffect(() => {

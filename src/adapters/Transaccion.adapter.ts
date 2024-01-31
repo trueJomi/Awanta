@@ -1,6 +1,6 @@
 import { Timestamp } from 'firebase/firestore'
-import { type EndpointTransaccion } from '../models/EndPointModel/EndpointTransaccion.model'
-import { type Transaccion } from '../models/Transaccion.model'
+import { type EndpointTransaccion, type EndpointTransaccionBase } from '../models/EndPointModel/EndpointTransaccion.model'
+import { type TransaccionBase, type Transaccion } from '../models/Transaccion.model'
 import { type Categoria } from '../models/Categoria.model'
 import { generateArray } from '../utilities/array.utilites'
 import { cartegorysDefault } from '../contexts/transactions.context'
@@ -9,7 +9,7 @@ export const adapterTransaccion = (transaccion: EndpointTransaccion) => {
   const formaterTransaccion: Transaccion = {
     id: transaccion.uid,
     idTransaccion: transaccion.id,
-    cantidad: transaccion.amount,
+    cantidad: transaccion.amount.toString(),
     descripcion: transaccion.description,
     moneda: transaccion.money,
     origen: transaccion.origin,
@@ -23,10 +23,27 @@ export const adapterTransaccion = (transaccion: EndpointTransaccion) => {
   return formaterTransaccion
 }
 
-export const adapterEndpointTransaccion = (transaccion: Transaccion) => {
-  const formaterEndpointTransaccion: EndpointTransaccion = {
+export const adapterEndpointTransaccionBase = (transaccion: TransaccionBase) => {
+  const formaterEndpointTransaccion: EndpointTransaccionBase = {
     id: transaccion.idTransaccion,
-    amount: transaccion.cantidad,
+    amount: +transaccion.cantidad,
+    description: transaccion.descripcion,
+    money: transaccion.moneda,
+    origin: transaccion.origen,
+    type: transaccion.tipo,
+    date: Timestamp.fromDate(transaccion.fecha),
+    user: transaccion.usuario,
+    category: transaccion.categoria,
+    visibility: transaccion.visibilidad,
+    email: transaccion.correo
+  }
+  return formaterEndpointTransaccion
+}
+
+export const adapterEndpointTransaccion = (transaccion: Transaccion) => {
+  const formaterEndpointTransaccion: EndpointTransaccionBase = {
+    id: transaccion.idTransaccion,
+    amount: +transaccion.cantidad,
     description: transaccion.descripcion,
     money: transaccion.moneda,
     origin: transaccion.origen,

@@ -1,5 +1,4 @@
 import React from 'react'
-import { useServiceModal } from '../../../hooks/Modal.hook'
 import { Transition, Dialog } from '@headlessui/react'
 import { HexColorPicker } from 'react-colorful'
 import { adaptativeColorText } from '../../../utilities/color.utilities'
@@ -11,12 +10,13 @@ import { useTranslation } from 'react-i18next'
 import { UserService } from '../../../services/User.service'
 import { validateCategory } from '../../../utilities/validates.utilities'
 import { Button } from '@mui/material'
+import { useModalAddCategoriaStore } from '../../../store/modal.store'
 
 const userService = new UserService()
 
 const ModalAddCattegory: React.FC = () => {
   const { user } = useAuth()
-  const { modalLimiteCompra } = useServiceModal()
+  const { getModal, setModal } = useModalAddCategoriaStore((state) => state)
   const [nameCategory, setNameCategory] = React.useState<string>('')
   const [equalCategory, setEqualCategory] = React.useState<boolean>(true)
   const [color, setColor] = React.useState<string>('#aabbcc')
@@ -52,8 +52,8 @@ const ModalAddCattegory: React.FC = () => {
 
   return (
       <>
-        <Transition.Root show={modalLimiteCompra.get} as={React.Fragment}>
-          <Dialog as="div" className="relative z-50" initialFocus={cancelButtonRef} onClose={modalLimiteCompra.set}>
+        <Transition.Root show={getModal} as={React.Fragment}>
+          <Dialog as="div" className="relative z-50" initialFocus={cancelButtonRef} onClose={setModal}>
             <Transition.Child
               as={React.Fragment}
               enter="ease-out duration-300"
@@ -114,7 +114,7 @@ const ModalAddCattegory: React.FC = () => {
                         className="inline-flex w-full !justify-center !rounded-xl !bg-main-yellow disabled:!bg-gray-300 disabled:opacity-50 px-3 py-2 !text-sm !font-semibold !text-main-brown shadow-sm sm:!ml-3 sm:!w-auto"
                         onClick={() => {
                           guardarCategory()
-                          modalLimiteCompra.set(false)
+                          setModal(false)
                         }}
                       >
                         {t('tab-2.modal.button-acept')}
@@ -123,7 +123,7 @@ const ModalAddCattegory: React.FC = () => {
                         type="button"
                         className="mt-3 inline-flex w-full uppercase justify-center rounded-xl bg-white dark:bg-slate-600 px-3 py-2 text-sm font-semibold text-gray-900 dark:text-gray-400 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-slate-500 sm:mt-0 sm:w-auto"
                         onClick={() => {
-                          modalLimiteCompra.set(false)
+                          setModal(false)
                         }}
                         ref={cancelButtonRef}
                       >

@@ -81,7 +81,7 @@ const HistorialUI: React.FC<PropsHisroyUI> = ({ transactions, goNext, goPrev, is
         <div className='max-w-[38rem] mx-auto' >
           <FilterTransacctions setTransactions={setCurrentTransaction} transactions={transactions} />
         </div>
-        <div className="mt-5" >
+        <div className="mt-5 space-y-4" >
             { (currentTransactions !== undefined)
               ? currentTransactions.length !== 0
                 ? currentTransactions.map((item) => (

@@ -10,9 +10,12 @@ import { AllMoney } from '../../contexts/money.context'
 import { useNavigate } from 'react-router-dom'
 import ButtonOcultarTransaction from '../Custom/ButtonOcultarTransaction.component'
 import { useTranslation } from 'react-i18next'
+import { useCurrentTransactionStore } from '../../store/currentTransaction'
+import { adapterNumberString } from '../../adapters/Numbers.adapter'
 
 const CardTransaction: React.FC<{ transaction: Transaccion }> = ({ transaction }) => {
   const { user } = useAuth()
+  const { setCurrentTransaction } = useCurrentTransactionStore((state) => state)
   const navigate = useNavigate()
   const { t } = useTranslation()
   const options: Intl.DateTimeFormatOptions = { month: 'long', day: 'numeric', year: 'numeric' }
@@ -22,7 +25,7 @@ const CardTransaction: React.FC<{ transaction: Transaccion }> = ({ transaction }
   const bankInfo = allOriginis.find((bank) => bank.name === transaction.origen) ?? allOriginis[0]
 
   return (
-    <Card className='mb-5 relative max-w-[38rem] mx-auto' >
+    <Card className='relative max-w-[38rem] mx-auto' >
       <CardContent className={` duration-200 ${transaction.visibilidad ? '' : 'opacity-30'}`} >
         <div className='text-[1.3rem] mb-3 flex items-center justify-start' >
           <span className='text-sm mr-3' >
@@ -48,13 +51,10 @@ const CardTransaction: React.FC<{ transaction: Transaccion }> = ({ transaction }
             <span className='mr-3' >
               <MdEmail/>
             </span>}
-            <span className=' text-sm' >
-              {transaction.tipo}
-            </span>
         </div>
         <div>
           <h1 className=' text-2xl font-black' >
-            {moneyInfo.simbol} {transaction.cantidad}
+            {moneyInfo.simbol} {adapterNumberString(+transaction.cantidad)}
           </h1>
           <div className='flex items-center' >
             <h1 className='font-black ' >
@@ -69,7 +69,10 @@ const CardTransaction: React.FC<{ transaction: Transaccion }> = ({ transaction }
               <ButtonOcultarTransaction transaction={transaction} />
               { transaction.visibilidad &&
               <Tooltip title={t('comon.transaction.button-edit')} >
-                  <IconButton onClick={() => { navigate(`/transaction/${transaction.id}`) }}>
+                  <IconButton onClick={() => {
+                    setCurrentTransaction(transaction)
+                    navigate(`/transaction/${transaction.id}`)
+                  }}>
                     <MdEdit/>
                 </IconButton>
               </Tooltip> }

@@ -7,9 +7,26 @@
         "tab-5":"comunidad",
         "button-add":"añadir gasto"
     },
+    "steps":{
+        "1": "usuario",
+        "2": "editar limites",
+        "3": "seleccionar bancos",
+        "4": "agrege categorias",
+        "5": "terminos y condiciones"
+    },
+    "create":{
+        "title":"crea tu cuenta",
+        "input-name":"nombre",
+        "input-lastname":"apellidos",
+        "input-phone":"telefono",
+        "input-limit-expense":"limites de gastos",
+        "input-salary":"salario",
+        "input-initDay":"dia inicial"
+    },
     "comon":{
         "mixer-grafic":"total",
         "modalSecure":{
+            "text": "Esta seguro de eliminar la transacción",
             "title-alert":"alerta cuidado",
             "button-delete":"eliminar",
             "button-cancel":"cancelar"
@@ -20,7 +37,11 @@
             "order-by":"ordenar por",
             "filters":{
                 "date": "fecha",
-                "amount": "cantidad"
+                "amount": "cantidad",
+                "invert": {
+                    "up": "ascendente",
+                    "down": "descendente"
+                }
             },
             "button-delete":"eliminar",
             "button-edit":"editar",
@@ -157,6 +178,22 @@
         "title":"rentabilidad entre cuentas de ahorro",
         "bank":"banco",
         "input-money":"Dinero inicial",
+        "input-entry": "Ingreso",
+        "input-cant":"mumero de años",
+        "input-frecuency": {
+            "title": "Frecuencia",
+            "items": {
+                "0": "mensual",
+                "1": "anual"
+            }
+        },
+        "input-time": {
+            "title": "timepo",
+            "items": {
+                "0": "inicio",
+                "1": "final"
+            }
+        },
         "comparar":{
             "title":"Tasa de interes",
             "target":"tarjeta",

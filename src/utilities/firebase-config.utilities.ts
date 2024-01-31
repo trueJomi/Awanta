@@ -20,11 +20,6 @@ const firebaseConfig = {
   measurementId: MESSUREMENT_ID
 }
 
-const app = initializeApp(firebaseConfig)
+export const app = initializeApp(firebaseConfig)
 
-const analytics = getAnalytics(app)
-
-export {
-  app,
-  analytics
-}
+export const analytics = getAnalytics(app)

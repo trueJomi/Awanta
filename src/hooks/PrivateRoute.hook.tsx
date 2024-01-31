@@ -9,11 +9,11 @@ const PrivateRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => 
   if (authState === undefined) {
     return <Loading/>
   }
+  if (user !== undefined && !user.TerminosYCondiciones) {
+    return <Navigate to="/create/politics" />
+  }
   if (!authState) {
     return <Navigate to='/auth' />
-  }
-  if (user !== undefined && !user.TerminosYCondiciones) {
-    return <Navigate to="/user/politics" />
   }
 
   return children

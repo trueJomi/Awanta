@@ -1,32 +1,31 @@
 import React from 'react'
-import { type Categoria } from '../../../models/Categoria.model'
 import { Dialog, Transition } from '@headlessui/react'
 import { MdWarning } from 'react-icons/md'
-import { useServiceModal } from '../../../hooks/Modal.hook'
 import { useTranslation } from 'react-i18next'
 import { UserService } from '../../../services/User.service'
 import { useAuth } from '../../../hooks/Auth.hook'
+import { useModalDeleteCategoriaStore } from '../../../store/modal.store'
 
 const userService = new UserService()
 
-const ModalDeleteCategory: React.FC<{ category: Categoria | undefined }> = ({ category }) => {
-  const { modalHistory } = useServiceModal()
+const ModalDeleteCategory: React.FC = () => {
+  const { getModal, setModal, categoria } = useModalDeleteCategoriaStore((state) => state)
   const { user } = useAuth()
   const { t } = useTranslation()
   const cancelButtonRef = React.useRef(null)
   const close = () => {
-    modalHistory.set(false)
+    setModal(false)
   }
 
   const deleteCategory = () => {
-    if (user !== undefined && category !== undefined) {
-      void userService.eliminarCategoria(user, category)
+    if (user !== undefined && categoria !== undefined) {
+      void userService.eliminarCategoria(user, categoria)
     }
   }
 
   return (
-        <Transition.Root show={modalHistory.get} as={React.Fragment} >
-                <Dialog as="div" className="relative z-10" __demoMode initialFocus={cancelButtonRef} onClose={modalHistory.set}>
+        <Transition.Root show={getModal} as={React.Fragment} >
+                <Dialog as="div" className="relative z-10" __demoMode initialFocus={cancelButtonRef} onClose={setModal}>
                   <Transition.Child
                     as={React.Fragment}
                     enter="ease-out duration-300"
@@ -61,7 +60,7 @@ const ModalDeleteCategory: React.FC<{ category: Categoria | undefined }> = ({ ca
                                   {t('comon.modalSecure.title-alert')}
                                 </Dialog.Title>
                                 <div className="mt-2">
-                                    {t('tab-2.alert-p1')} <span className="text-red-500 font-black uppercase" >{category?.nombre}</span> {t('tab-2.alert-p2')} <span className="font-black uppercase" >consumo</span> {t('tab-2.alert-p3')}
+                                    {t('tab-2.alert-p1')} <span className="text-red-500 font-black uppercase" >{categoria?.nombre}</span> {t('tab-2.alert-p2')} <span className="font-black uppercase" >consumo</span> {t('tab-2.alert-p3')}
                                 </div>
                               </div>
                             </div>

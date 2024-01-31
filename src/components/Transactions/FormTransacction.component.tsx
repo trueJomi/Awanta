@@ -8,54 +8,41 @@ import { cartegorysDefault } from '../../contexts/transactions.context'
 import { useTranslation } from 'react-i18next'
 import CustomInput from '../Custom/CustomInput.component'
 import { useAuth } from '../../hooks/Auth.hook'
-import { type Transaccion } from '../../models/Transaccion.model'
+import { type TransaccionBase, type Transaccion } from '../../models/Transaccion.model'
 import CustomButtonLoading from '../Custom/CustomButtonLoading.component'
+import MoneyInput from '../Custom/MoneyInput.componet'
+import { AllMoney } from '../../contexts/money.context'
 
-const FormTransaction: React.FC<{ transaction?: Transaccion, fun: (transacction: Transaccion) => Promise<void> }> = ({ transaction, fun }) => {
+const FormTransaction: React.FC<{ transaction?: Transaccion, fun: (transacction: TransaccionBase) => Promise<void> }> = ({ transaction, fun }) => {
   const { user } = useAuth()
   const { t } = useTranslation()
   const navigate = useNavigate()
+  const [currentTransaction, setCurrentTransaction] = React.useState<TransaccionBase>(transaction ??
+    {
+      cantidad: '',
+      fecha: new Date(),
+      descripcion: '',
+      idTransaccion: v4(),
+      moneda: 'PEN',
+      origen: 'EFECTIVO',
+      tipo: 'consumo',
+      usuario: user?.idUser ?? '',
+      categoria: cartegorysDefault[0].nombre,
+      visibilidad: true,
+      correo: false
+    })
   const [loading, setLoading] = React.useState<boolean>(false)
-  const [amount, setAmount] = React.useState<number | undefined>(undefined)
-  const [description, setDescription] = React.useState<string | undefined>(undefined)
-  const [money, setMoney] = React.useState<string>('PEN')
-  const [origin, setOrigin] = React.useState<string>('EFECTIVO')
   const [disable, setDisable] = React.useState<boolean>(true)
-  const [date, setDate] = React.useState<Date>(new Date())
-  const [categoria, setCategoria] = React.useState<string>(cartegorysDefault[0].nombre)
-  const [email, setEmail] = React.useState<boolean>(false)
 
   const guardarTransaction = (event: React.MouseEvent<HTMLFormElement>) => {
     setLoading(true)
     event.preventDefault()
-    if (amount !== undefined && user !== undefined) {
-      const descriptionPast = description !== undefined ? description.trim() : 'desconocido'
-      const originPast = origin.trim() === '' ? 'EFECTIVO' : origin.trim().toUpperCase()
-      const moneyPast = money ?? 'PEN'
-      const data: Transaccion = transaction !== undefined
-        ? {
-            ...transaction,
-            cantidad: amount,
-            fecha: date,
-            descripcion: descriptionPast,
-            moneda: moneyPast,
-            categoria
-          }
-        : {
-            id: '00000000000',
-            cantidad: amount,
-            fecha: date,
-            descripcion: descriptionPast,
-            idTransaccion: v4(),
-            moneda: moneyPast,
-            origen: originPast,
-            tipo: 'consumo',
-            usuario: user.idUser,
-            categoria,
-            visibilidad: true,
-            correo: false
-          }
-      void fun(data).then(() => {
+    if (currentTransaction.cantidad !== '') {
+      const descriptionPast = currentTransaction.descripcion.trim() !== '' ? currentTransaction.descripcion.trim() : 'desconocido'
+      setCurrentTransaction({ ...currentTransaction, descripcion: descriptionPast })
+      const originPast = currentTransaction.origen.trim() === '' ? 'EFECTIVO' : currentTransaction.origen.trim().toUpperCase()
+      setCurrentTransaction({ ...currentTransaction, origen: originPast })
+      void fun(currentTransaction).then(() => {
         setLoading(false)
         navigate(-1)
       })
@@ -63,87 +50,82 @@ const FormTransaction: React.FC<{ transaction?: Transaccion, fun: (transacction:
   }
 
   const switchDisable = () => {
-    setOrigin('EFECTIVO')
+    setCurrentTransaction({ ...currentTransaction, origen: 'EFECTIVO' })
     setDisable(!disable)
   }
 
-  const saveOrigin = (input: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setOrigin(input.target.value)
-  }
-
-  const saveAmount = (input: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setAmount(+input.target.value)
-  }
-
-  const saveDescripcion = (input: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setDescription(input.target.value)
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setCurrentTransaction({
+      ...currentTransaction,
+      [event.target.name]: event.target.value
+    })
   }
 
   const saveDate = (input: dayjs.Dayjs | null) => {
     if (input === null) return
     const dateNew = input?.toDate()
-    setDate(dateNew)
+    setCurrentTransaction({ ...currentTransaction, fecha: dateNew })
   }
-
-  const saveCategoria = (input: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setCategoria(input.target.value)
-  }
-
-  React.useEffect(() => {
-    if (transaction !== undefined) {
-      setAmount(transaction.cantidad)
-      setDescription(transaction.descripcion)
-      setDate(transaction.fecha)
-      setCategoria(transaction.categoria)
-      setOrigin(transaction.origen)
-      setMoney(transaction.moneda)
-      setEmail(transaction.correo)
-    }
-  }, [transaction])
 
   return (
         <>
         <form onSubmit={guardarTransaction}>
-            <div className="col-span-1 mt-5" >
+            <div className="col-span-1 mt-5 flex gap-2" >
                 <CustomInput
-                    name="amount"
-                    required={true}
-                    value={amount}
-                    disabled={email}
-                    inputProps={{
-                      placeholder: '0.00',
-                      startAdornment: <span className="mr-3" >S/</span>
-                    }}
-                    type="number"
-                    change={saveAmount}
-                    label={t('comon.transaction.input-amount')}
-                    />
+                  type='text'
+                  name='moneda'
+                  select
+                  onChange={handleChange}
+                  value={currentTransaction.moneda}
+                >
+                  <MenuItem
+                    value={AllMoney[0].name}
+                  >
+                    {AllMoney[0].name}
+                  </MenuItem>
+                  <MenuItem
+                    value={AllMoney[1].name}
+                  >
+                    {AllMoney[1].name}
+                  </MenuItem>
+                </CustomInput>
+                <div className=' w-full' >
+                  <MoneyInput
+                      name="cantidad"
+                      required={true}
+                      value={currentTransaction.cantidad}
+                      disabled={currentTransaction.correo}
+                      onChange={handleChange}
+                      label={t('comon.transaction.input-amount')}
+                      prefix='S/ '
+                      />
+                </div>
             </div>
             <div className="col-span-1 mt-5" >
                 <DatePicker
-                    name='date'
-                    disabled ={email}
+                    name='fecha'
+                    disabled ={currentTransaction.correo}
                     className="w-full"
                     label={t('comon.transaction.input-date')}
-                    value={dayjs(date)}
+                    value={dayjs(currentTransaction.fecha)}
                     onChange={saveDate}
                     />
             </div>
 
             <div className="col-span-1 mt-5">
                 <CustomInput
-                    value={description}
-                    name="description"
-                    change={saveDescripcion}
+                    value={currentTransaction.descripcion}
+                    name="descripcion"
+                    onChange={handleChange}
                     type="text"
-                    inputProps={{
+                    InputProps={{
                       placeholder: 'desconocido'
                     }}
                     label={t('comon.transaction.input-description')}
                     />
             </div>
             <div className="col-span-1 mt-5 items-center flex justify-stretch " >
-                { !email &&
+                { !currentTransaction.correo &&
                   <div className=' col-span-1 ' >
                     <Checkbox
                       checked={disable}
@@ -152,14 +134,13 @@ const FormTransaction: React.FC<{ transaction?: Transaccion, fun: (transacction:
                   </div>}
                 <div className='w-full' >
                   <CustomInput
-                      name="origin"
+                      name="origen"
                       type="text"
-                      className=''
-                      value={origin}
-                      disabled={disable || email}
-                      change={saveOrigin}
+                      value={currentTransaction.origen}
+                      disabled={disable || currentTransaction.correo}
+                      onChange={handleChange}
                       label={t('comon.transaction.input-origin')}
-                      inputProps={{
+                      InputProps={{
                         placeholder: 'EFECTIVO'
                       }}
                       />
@@ -168,15 +149,15 @@ const FormTransaction: React.FC<{ transaction?: Transaccion, fun: (transacction:
             <div className="col-span-1 mt-5" >
                 <CustomInput
                     select
-                    name="category"
+                    name="categoria"
                     type="text"
-                    value={categoria}
-                    change={saveCategoria}
+                    value={currentTransaction.categoria}
+                    onChange={handleChange}
                     label={t('comon.transaction.input-category')}
                     >
-                    {user?.categoria.map((category, idx) => (
+                    {user?.categoria.map((category) => (
                       <MenuItem
-                        key={idx}
+                        key={category.nombre}
                         value={category.nombre}
                         className="capitalize" >
                             {category.nombre}

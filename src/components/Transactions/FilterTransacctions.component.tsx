@@ -13,6 +13,7 @@ const FilterTransacctions: React.FC<{ setTransactions: (data: Transaccion[]) => 
   const [orderBy, setOrderBy] = React.useState<string>(filtersTransactions[0].name)
 
   const { t } = useTranslation()
+
   const handleFilter = (input: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setType(input.target.value)
   }
@@ -40,8 +41,8 @@ const FilterTransacctions: React.FC<{ setTransactions: (data: Transaccion[]) => 
         <CustomInput
           type='text'
           select
-          valueDefault={'all'}
-          change={handleFilter}
+          defaultValue='all'
+          onChange={handleFilter}
           label={t('comon.transaction.filter-bank')}
           name='filter-bank'
         >
@@ -63,8 +64,8 @@ const FilterTransacctions: React.FC<{ setTransactions: (data: Transaccion[]) => 
         <CustomInput
           type='text'
           select
-          change={handleOrderBy}
-          valueDefault={filtersTransactions[0].name}
+          onChange={handleOrderBy}
+          defaultValue={filtersTransactions[0].name}
           label={t('comon.transaction.order-by')}
           name='order-by'
         >
@@ -80,7 +81,7 @@ const FilterTransacctions: React.FC<{ setTransactions: (data: Transaccion[]) => 
       </div>
       <div className='' >
         <Tooltip
-          title={t('comon.transaction.filters.invert')}
+          title={invert ? t('comon.transaction.filters.invert.up') : t('comon.transaction.filters.invert.down')}
         >
           <ToggleButton
             value='invert'

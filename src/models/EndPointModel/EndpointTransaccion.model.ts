@@ -1,7 +1,6 @@
 import { type Timestamp } from 'firebase/firestore'
 
-export interface EndpointTransaccion {
-  uid?: string
+export interface EndpointTransaccionBase {
   amount: number
   date: Timestamp
   description: string
@@ -13,4 +12,8 @@ export interface EndpointTransaccion {
   category: string
   visibility: boolean
   email: boolean
+}
+
+export interface EndpointTransaccion extends EndpointTransaccionBase {
+  uid: string
 }

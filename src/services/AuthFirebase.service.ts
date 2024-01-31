@@ -33,18 +33,19 @@ export const loginWithCredentials = async (accessToken: string, idToken: string)
     const existClient = await userService.existClientByEmail(result.user.email)
     if (!existClient) {
       await logOut()
-      return false
-    } else if (!exist && addInfo?.profile !== null) {
+      throw new Error('No se encuentra registrado como cliente')
+    } else if (existClient && !exist && addInfo?.profile !== null) {
       const googleUser: UserGoogle = {
         id: addInfo?.profile.sub as string,
-        nombre: addInfo?.profile.given_name as string,
-        apellido: addInfo?.profile.family_name as string,
+        nombre: addInfo?.profile.given_name as string ?? '',
+        apellido: addInfo?.profile.family_name as string ?? '',
         img: addInfo?.profile.picture as string,
         email: addInfo?.profile.email as string,
         proveedor: 'Google'
       }
       const user = adapterGoogleUser(googleUser)
       await userService.save(user, result.user.uid)
+      return false
     }
     return true
   } else {

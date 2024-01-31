@@ -1,5 +1,5 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Navigate, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../hooks/Auth.hook'
 import { UserService } from '../../services/User.service'
 import { useTranslation } from 'react-i18next'
@@ -10,10 +10,14 @@ import { Button, Checkbox, FormControlLabel } from '@mui/material'
 const UserSerivice = new UserService()
 
 const PoliticsAndConditionsPage: React.FC = () => {
-  const { user } = useAuth()
+  const { user, authState } = useAuth()
   const navigate = useNavigate()
   const { t } = useTranslation()
   const [acept, setAcept] = React.useState<boolean>(false)
+
+  if (authState === false) {
+    return <Navigate to="/auth" />
+  }
 
   const agreePolitics = (event: React.MouseEvent<HTMLFormElement>) => {
     event.preventDefault()

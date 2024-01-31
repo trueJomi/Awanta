@@ -1,18 +1,19 @@
+import { adapterEndpointTransaccionBase } from './../adapters/Transaccion.adapter'
 import { type DocumentData, type OrderByDirection, type QuerySnapshot } from 'firebase/firestore'
-import { adapterEndpointTransaccion, adapterTransaccion } from '../adapters/Transaccion.adapter'
+import { adapterTransaccion } from '../adapters/Transaccion.adapter'
 import { type EndpointTransaccion } from '../models/EndPointModel/EndpointTransaccion.model'
-import { type Transaccion } from '../models/Transaccion.model'
+import { type TransaccionBase, type Transaccion } from '../models/Transaccion.model'
 import { comonCreateDataWithId, comonDeleteData, comonGetCantPages, comonGetData, comonGetDataListener, comonGetIntervalDate, comonGetIntervalDateListener, comonGetOrderByParam, comonGetOrderByParamListener, comonGetPaginated, comonUpdateData } from './ComonFirebase.service'
 
 export class TransactionService {
   // crud
-  async update (transaccion: Transaccion, id: string, idTransaccion: string) {
-    const newTransaccion = adapterEndpointTransaccion(transaccion)
+  async update (transaccion: TransaccionBase, id: string, idTransaccion: string) {
+    const newTransaccion = adapterEndpointTransaccionBase(transaccion)
     await comonUpdateData(newTransaccion, `User/${id}/Transaction`, idTransaccion)
   }
 
-  async save (data: Transaccion, id: string) {
-    const tTran = adapterEndpointTransaccion(data)
+  async save (data: TransaccionBase, id: string) {
+    const tTran = adapterEndpointTransaccionBase(data)
     return await comonCreateDataWithId(tTran, 'Transaction', id)
   }
 

@@ -5,17 +5,14 @@ import { Outlet, useNavigate } from 'react-router-dom'
 import { useAuth } from '../hooks/Auth.hook'
 import { Button, Popover } from '@mui/material'
 import { MdPerson, MdSettings, MdLogout } from 'react-icons/md'
-import { getUserId, logOut } from '../services/AuthFirebase.service'
-import ModalAlertSegure from './Custom/ModalAlertSegure.component'
-import { TransactionService } from '../services/Transaction.service'
-import { useServiceModal } from '../hooks/Modal.hook'
+import { logOut } from '../services/AuthFirebase.service'
+import ModalDeleteTransaction from './Custom/ModalDeleteTransaction.component'
 import IconSqueleton from './Squeletons/IconSqueleton.component'
 
 const solutions = [
   { name: 'Usuario', icon: MdPerson, path: '/user' },
   { name: 'Opciones', icon: MdSettings, path: '/settings' }
 ]
-const transactionService = new TransactionService()
 
 const Layout: React.FC<{ navLinks: LayoutNav[] }> = ({ navLinks }) => {
   const currentRoute = navLinks.findIndex((element) => {
@@ -24,8 +21,6 @@ const Layout: React.FC<{ navLinks: LayoutNav[] }> = ({ navLinks }) => {
 
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | undefined>(undefined)
   const [active, setActive] = React.useState<number>(currentRoute)
-
-  const { alertDelete } = useServiceModal()
   const { user } = useAuth()
   const navigate = useNavigate()
   const { t } = useTranslation()
@@ -128,9 +123,7 @@ const Layout: React.FC<{ navLinks: LayoutNav[] }> = ({ navLinks }) => {
               </div>
           </div>
       </Popover>
-      <ModalAlertSegure funtion={() => {
-        void transactionService.delete(getUserId(), alertDelete.constents as string)
-      }} text={'Esta seguro de eliminar la siguiente transaccion?'} />
+      <ModalDeleteTransaction/>
    </>
   )
 }

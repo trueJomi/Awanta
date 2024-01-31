@@ -13,7 +13,7 @@ const CredentialsPage: React.FC = () => {
     if (valid) {
       navigate('/')
     } else {
-      navigate('/subscribe')
+      navigate('/create/politics')
     }
   }
 

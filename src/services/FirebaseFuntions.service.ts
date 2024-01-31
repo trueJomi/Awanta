@@ -1,5 +1,14 @@
-import { API_URL } from '../contexts/env.context'
-import { auth } from './AuthFirebase.service'
+import {
+  getFunctions,
+  httpsCallable
+  // connectFunctionsEmulator,
+} from 'firebase/functions'
+// import { API_URL } from '../contexts/env.context'
+// import { auth } from './AuthFirebase.service'
+import { app } from '../utilities/firebase-config.utilities'
+
+const funtions = getFunctions(app)
+// connectFunctionsEmulator(funtions, 'localhost', 5000)
 
 interface TokenResponse {
   accessToken: string
@@ -12,80 +21,44 @@ interface RevokeToken {
 }
 
 export const revokeToken = async (token: string): Promise<any> => {
-  const fun = await fetch(`${API_URL}/revokeToken`, {
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    method: 'POST',
-    body: JSON.stringify({
-      refreshToken: token
-    })
-  })
-  if (fun.status >= 300) {
-    const result = await fun.json()
-    throw new Error(result.message as string)
+  try {
+    const fun = httpsCallable(funtions, 'revokeToken')
+    const result = await fun({ refreshToken: token })
+    return result.data as RevokeToken
+  } catch (error) {
+    throw new Error(error as string)
   }
-  const result = await fun.json()
-  return result as RevokeToken
 }
 
 export const createGoogleAuthLink = async () => {
   try {
-    const request = await fetch(`${API_URL}/createAuthLink`, {
-      method: 'GET'
-    })
-    const response = await request.json()
-    if (request.status >= 300) {
-      const result = await request.json()
-      throw new Error(result.message as string)
-    }
-    window.location.href = response.url
+    const fun = httpsCallable(funtions, 'createAuthLink')
+    const result = await fun()
+    window.location.href = result.data as string
+    return result.data as string
   } catch (error) {
-    throw new Error('Issue with Login')
+    throw new Error(error as string)
   }
 }
 
 export const getValidToken = async (refreshToken: string) => {
-  const fun = await fetch(`${API_URL}/getValidToken`, {
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    method: 'POST',
-    body: JSON.stringify({
-      refreshToken
-    })
-  })
-  if (fun.status >= 300) {
-    const result = await fun.json()
-    console.log(result.message)
-    if (result.message === 'Error: invalid_token') {
-      void auth.signOut()
-    }
-    throw new Error(result.message as string)
+  try {
+    const fun = httpsCallable(funtions, 'getValidToken')
+    const result = await fun({ refreshToken })
+    const { body } = result.data as any
+    return body as TokenResponse
+  } catch (error) {
+    throw new Error(error as string)
   }
-  const result = await fun.json()
-  const { body } = result
-  return body as TokenResponse
 }
 
-export const getMessagesGoogle = async (id: string, accessToken: string) => {
-  const fun = await fetch(`${API_URL}/getGmailsTransactions`, {
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    method: 'POST',
-    body: JSON.stringify({
-      id,
-      accessToken
-    })
-  })
-  if (fun.status >= 300) {
-    const result = await fun.json()
-    if (result.message === 'Error: invalid_token') {
-      void auth.signOut()
-    }
-    throw new Error(result.message as string)
+export const getMessagesGoogle = async (accessToken: string) => {
+  try {
+    const fun = httpsCallable(funtions, 'getGmailsTransactions')
+    const result = await fun({ accessToken })
+    const { body } = result.data as any
+    return body
+  } catch (error) {
+    throw new Error(error as string)
   }
-  const result = await fun.json()
-  return result
 }

@@ -2,6 +2,7 @@ import { meses, months } from '../contexts/times.context'
 
 export const getMonthString = (intMonth: number = 0, lang: string) => {
   const currentDate = new Date()
+  currentDate.setDate(1)
   currentDate.setMonth(currentDate.getMonth() + intMonth)
   if (lang === 'en') {
     return {
@@ -20,5 +21,10 @@ export const getMonthString = (intMonth: number = 0, lang: string) => {
 
 export const getMonthStringCurrent = (intMonth: number = 0, lang: string) => {
   const currentMonth = (intMonth - 1) * -1
+  return getMonthString(currentMonth, lang)
+}
+
+export const getMonthStringCurrentIncrement = (intMonth: number = 0, lang: string) => {
+  const currentMonth = (intMonth - 1)
   return getMonthString(currentMonth, lang)
 }

@@ -66,7 +66,7 @@ export const comonGetOrderByParam = async (path: string, idUser: string | undefi
 export const comonGetOrderByParamListener = (path: string, idUser: string | undefined, param: string, limite: number = 1, order: OrderByDirection = 'desc', fun: (snapshot: QuerySnapshot<DocumentData>) => void) => {
   const dataCol = colletionPath(path, idUser)
   const qr = query(dataCol, orderBy(param, order), limit(limite))
-  return onSnapshot(qr, fun, (err) => { console.log(err.message) })
+  return onSnapshot(qr, fun, (err) => { console.error(err.message) })
 }
 
 export const comonGetIntervalDate = async (path: string, idUser: string | undefined, interval: Date[], order: OrderByDirection = 'desc') => {
@@ -79,7 +79,7 @@ export const comonGetIntervalDate = async (path: string, idUser: string | undefi
 export const comonGetIntervalDateListener = (path: string, idUser: string | undefined, interval: Date[], order: OrderByDirection = 'desc', fun: (snapshot: QuerySnapshot<DocumentData>) => void) => {
   const dataCol = colletionPath(path, idUser)
   const qr = query(dataCol, orderBy('date', order), where('date', '>=', interval[0]), where('date', '<=', interval[1]))
-  return onSnapshot(qr, fun, (err) => { console.log(err.message) })
+  return onSnapshot(qr, fun, (err) => { console.error(err.message) })
 }
 
 export const comonGetPaginated = async (path: string, idUser: string | undefined, limite: number = 15, page: number) => {
@@ -111,7 +111,7 @@ export const comonGetAllDataWhereListener = (path: string, fun: (snapshot: Query
   const ref = colletionPath(path, idUser)
   if (param !== undefined && iqual !== undefined) {
     const qr = query(ref, where(param, '==', iqual))
-    return onSnapshot(qr, fun, (err) => { console.log(err.message) })
+    return onSnapshot(qr, fun, (err) => { console.error(err.message) })
   }
 }
 
@@ -149,5 +149,5 @@ export const comonGetData = async (path: string, id: string) => {
 
 export const comonGetDataListener = (path: string, id: string, fun: (data: DocumentSnapshot<DocumentData>) => void) => {
   const dataDoc = doc(db, path, id)
-  return onSnapshot(dataDoc, fun, (err) => { console.log(err.message) })
+  return onSnapshot(dataDoc, fun, (err) => { console.error(err.message) })
 }

@@ -13,9 +13,11 @@ import {
 } from 'chart.js'
 import { type Tasa } from '../../../models/Tasa.model'
 import { Line } from 'react-chartjs-2'
-import { getMonthStringCurrent } from '../../../utilities/month.utilities'
+import { getMonthStringCurrentIncrement } from '../../../utilities/month.utilities'
 import { useTranslation } from 'react-i18next'
 import { type GraficBarModel } from '../../../models/utils/BarGrafic.model'
+import { interesCompuestoBase } from '../../../utilities/calculates'
+import { adapterNumberRound2 } from '../../../adapters/Numbers.adapter'
 Chart.register(
   Title,
   Legend,
@@ -29,9 +31,56 @@ Chart.register(
 interface PropsBarComp {
   tasas: Tasa[]
   inicial: number
+  entry: number
+  time: 'inicio' | 'fin'
+  frecuency: 'mensual' | 'anual'
+  cant: number
 }
 
-const BarCompare: React.FC<PropsBarComp> = ({ tasas, inicial }) => {
+const createData = (tasas: Tasa[], cant: number, frecuency: 'mensual' | 'anual', time: 'inicio' | 'fin', entry: number, inicial: number, lang: string) => {
+  const dataTotal: GraficBarModel[] = tasas.map((taza) => {
+    const dataTemp: GraficBarModel = {
+      labels: [],
+      data: []
+    }
+    let price: number = inicial
+    if (frecuency === 'anual') {
+      for (let plazo = 0; plazo <= cant; plazo++) {
+        const mes = getMonthStringCurrentIncrement(plazo * 12, lang)
+        const finalV = adapterNumberRound2(price)
+        dataTemp.data.push(finalV)
+        dataTemp.labels.push(mes.year.toString())
+        if (time === 'inicio') {
+          price += entry
+        }
+        price = interesCompuestoBase(taza.tasa, 1, price)
+        if (time === 'fin') {
+          price += entry
+        }
+      }
+      return dataTemp
+    } else {
+      for (let plazo = 0; plazo <= 12 * cant; plazo++) {
+        const finalV = adapterNumberRound2(price)
+        const mes = getMonthStringCurrentIncrement(plazo + 1, lang)
+        dataTemp.data.push(finalV)
+        dataTemp.labels.push(`${mes.month}-${mes.year}`)
+        if (time === 'inicio') {
+          price += entry
+        }
+        const tazaMesual = taza.tasa / 12
+        price = interesCompuestoBase(tazaMesual, 1, price)
+        if (time === 'fin') {
+          price += entry
+        }
+      }
+      return dataTemp
+    }
+  })
+  return dataTotal
+}
+
+const BarCompare: React.FC<PropsBarComp> = ({ tasas, inicial, entry, time, frecuency, cant }) => {
   const { i18n } = useTranslation()
   const [data, setData] = React.useState<GraficBarModel[]>([
     {
@@ -85,34 +134,6 @@ const BarCompare: React.FC<PropsBarComp> = ({ tasas, inicial }) => {
     window.addEventListener('resize', handleResize)
   })
 
-  const interesCompuesto = (interes: number, plazos: number) => {
-    const final = inicial * Math.pow((1 + (interes / 100)), plazos)
-    return final
-  }
-
-  const fixed = (numero: number) => {
-    return Number(numero.toFixed(2))
-  }
-
-  const createData = () => {
-    const dataTotal: GraficBarModel[] = tasas.map((taza) => {
-      const dataTemp: GraficBarModel = {
-        labels: [],
-        data: []
-      }
-      for (let plazo = 0; plazo < 13; plazo++) {
-        const tazaMesual = taza.tasa / 12
-        const finalV = fixed(interesCompuesto(tazaMesual, plazo))
-        const mes = getMonthStringCurrent(plazo, i18n.language)
-        dataTemp.data.push(finalV)
-        dataTemp.labels.push(mes.month)
-      }
-      return dataTemp
-    })
-
-    setData(dataTotal)
-  }
-
   React.useEffect(() => {
     if (sizeWindow > 1280) {
       setConfig({
@@ -161,10 +182,14 @@ const BarCompare: React.FC<PropsBarComp> = ({ tasas, inicial }) => {
       })
     }
   }, [data])
-  React.useEffect(createData, [inicial, tasas, sizeWindow])
+  React.useEffect(() => {
+    const data = createData(tasas, cant, frecuency, time, entry, inicial, i18n.language)
+    setData(data)
+  }, [inicial, tasas, sizeWindow, entry, time, frecuency, cant, i18n.language])
 
   return (
-        <Line
+        <>
+          <Line
             data={config}
             options={{
               responsive: true,
@@ -179,7 +204,11 @@ const BarCompare: React.FC<PropsBarComp> = ({ tasas, inicial }) => {
                 }
               }
             }}
-        />
+          />
+          <div className=' text-center text-4xl font-bold' >
+            {/* {adapterNumberString(data[0].data[data[0].data.length - 1])} */}
+          </div>
+        </>
   )
 }
 

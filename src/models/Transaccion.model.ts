@@ -1,8 +1,7 @@
-export interface Transaccion {
-  cantidad: number
+export interface TransaccionBase {
+  cantidad: string
   fecha: Date
   descripcion: string
-  id?: string
   idTransaccion: string
   moneda: string
   origen: string
@@ -11,4 +10,8 @@ export interface Transaccion {
   categoria: string
   visibilidad: boolean
   correo: boolean
+}
+
+export interface Transaccion extends TransaccionBase {
+  id: string
 }

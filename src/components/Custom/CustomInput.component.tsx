@@ -4,16 +4,16 @@ import React from 'react'
 interface NewInputProps {
   name: string
   errors?: string
-  change: (input: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
+  onChange?: (input: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
   label?: string
   type: React.HTMLInputTypeAttribute
-  inputProps?: Partial<FilledInputProps> | Partial<OutlinedInputProps> | Partial<InputProps>
+  InputProps?: Partial<FilledInputProps> | Partial<OutlinedInputProps> | Partial<InputProps>
   disabled?: boolean
   required?: boolean
   value?: any
   select?: boolean
   children?: any
-  valueDefault?: any
+  defaultValue?: any
   className?: string
 }
 
@@ -23,30 +23,31 @@ const CustomInput: React.FC<NewInputProps> = ({
   label = '',
   className = '',
   type,
-  inputProps = {},
+  InputProps = {},
   disabled = false,
-  change,
+  onChange,
   required = false,
   value,
   select = false,
-  valueDefault,
+  defaultValue,
   children
 }) => {
   return (
     <div>
       <TextField
-        defaultValue={valueDefault}
+        defaultValue={defaultValue}
         value={value}
         className={`w-full disabled:bg-slate-100 disabled:dark:bg-gray-700 ${className}`}
         required={required}
         disabled={disabled}
         type={type}
+        name={name}
         error={errors !== undefined}
         id={name}
         select={select}
         label={label}
-        InputProps={inputProps}
-        onChange={change}
+        InputProps={InputProps}
+        onChange={onChange}
         fullWidth
         helperText={errors}
       >

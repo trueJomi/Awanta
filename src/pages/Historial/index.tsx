@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import HistorialUI from './components/HistorialUI'
 import { useSearchParams } from 'react-router-dom'
 import { type Transaccion } from '../../models/Transaccion.model'
@@ -26,18 +26,16 @@ const HistorialPage: React.FC = () => {
   const [prev, setPrev] = React.useState<Transaccion[] | undefined >(undefined)
   const [current, setCurrent] = React.useState<Transaccion[] | undefined>(undefined)
   const [next, setNext] = React.useState<Transaccion[] | undefined>(undefined)
-
-  const getPage = () => {
+  const page = useMemo(() => {
     const page = searchParams.get('page')
     if (page === null) {
       return 1
     } else {
       return +page
     }
-  }
+  }, [searchParams])
 
   const move = (move: number) => {
-    const page = getPage()
     setSearchParams((prev) => {
       prev.set('page', (page + move).toString())
       return prev
@@ -59,19 +57,21 @@ const HistorialPage: React.FC = () => {
   }
   React.useEffect(() => {
     if (next === undefined && user !== undefined) {
-      return getTransactions(1, getMonth(getPage()), user, setNext)
+      return getTransactions(1, getMonth(page), user, setNext)
     }
-  }, [next, user])
+  }, [user, page])
   React.useEffect(() => {
     if (prev === undefined && user !== undefined) {
-      return getTransactions(-1, getMonth(getPage()), user, setPrev)
+      // console.log('prev')
+      return getTransactions(-1, getMonth(page), user, setPrev)
     }
-  }, [prev, user])
+  }, [user, page])
   React.useEffect(() => {
     if (user !== undefined) {
-      return getTransactions(0, getMonth(getPage()), user, setCurrent)
+      // console.log('prev')
+      return getTransactions(0, getMonth(page), user, setCurrent)
     }
-  }, [user])
+  }, [user, page])
 
   return (
       <HistorialUI

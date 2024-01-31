@@ -2,10 +2,10 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { pngTitulo } from '../../contexts/images.context'
 import { useTranslation } from 'react-i18next'
-import LanguageButton from '../../components/languageButton.component'
 import Politicas from '../../components/Terms/Politicas'
 import Condiciones from '../../components/Terms/Condiciones'
 import { Button } from '@mui/material'
+import LanguageButton from '../../components/LanguageButton.component'
 
 const PoliticasHomePage: React.FC = () => {
   const navigate = useNavigate()

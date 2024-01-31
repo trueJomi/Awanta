@@ -20,32 +20,35 @@ import HomePage from './pages/Home'
 import HistorialPage from './pages/Historial'
 import SettingsPage from './pages/Settings'
 import OrganizarGastosPage from './pages/OrgnaizarGastos'
+import UserCreate from './pages/UserCreate'
 
 const Routers: React.FC = () => {
   const { t } = useTranslation()
 
-  const viewLayout: LayoutNav[] = [
-    {
-      path: '/',
-      name: t('layout.tab-1')
-    },
-    {
-      path: '/organizar',
-      name: t('layout.tab-2')
-    },
-    {
-      path: '/history',
-      name: t('layout.tab-3')
-    },
-    {
-      path: '/asesorate',
-      name: t('layout.tab-4')
-    },
-    {
-      path: '/comunity',
-      name: t('layout.tab-5')
-    }
-  ]
+  const viewLayout: LayoutNav[] = React.useMemo(() => {
+    return [
+      {
+        path: '/',
+        name: t('layout.tab-1')
+      },
+      {
+        path: '/organizar',
+        name: t('layout.tab-2')
+      },
+      {
+        path: '/history',
+        name: t('layout.tab-3')
+      },
+      {
+        path: '/asesorate',
+        name: t('layout.tab-4')
+      },
+      {
+        path: '/comunity',
+        name: t('layout.tab-5')
+      }
+    ]
+  }, [t])
 
   return (
         <Routes>
@@ -71,11 +74,8 @@ const Routers: React.FC = () => {
             <Route path="auth" element={<OnlyPublicRoute><Auth/></OnlyPublicRoute>}/>
 
             <Route path='/credentials' element={<CredentialsPage/>} />
-            <Route path="/user/politics" element={
-              <PrivateRoute>
-                <PoliticsAndConditionsPage/>
-                </PrivateRoute>
-              }/>
+            <Route path="/create/politics" element={<PoliticsAndConditionsPage/>}/>
+            <Route path="/create" element={<UserCreate/>} />
             <Route path='/home' element={<Navigate to="/" />} />
             <Route path='/conditions' element={<PoliticasHomePage/>} />
             <Route path='/subscribe' element={<SubscribePage/>} />

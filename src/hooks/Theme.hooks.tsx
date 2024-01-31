@@ -1,5 +1,5 @@
 import React, { createContext, useEffect } from 'react'
-import { getCurrentTheme } from '../utilities/localStorage.utilities'
+import { getCurrentTheme, setCurrentTheme } from '../utilities/localStorage.utilities'
 import { ThemeProvider, createTheme, useMediaQuery, useTheme } from '@mui/material'
 
 interface PropsTheme {
@@ -38,10 +38,12 @@ export const ThemeHook: React.FC<{ children: React.ReactNode }> = ({ children })
     if (theme === 'light') {
       setTheme('light')
       themeMUI.palette.mode = 'light'
+      setCurrentTheme('light')
       document.querySelector('html')?.classList.remove('dark')
     } else {
       setTheme('dark')
       themeMUI.palette.mode = 'dark'
+      setCurrentTheme('dark')
       document.querySelector('html')?.classList.add('dark')
     }
   }, [theme])

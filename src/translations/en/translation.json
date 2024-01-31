@@ -7,9 +7,26 @@
         "tab-5":"community",
         "button-add":"add expense"
     },
+    "steps":{
+        "1": "user",
+        "2": "edit limits",
+        "3": "select banks",
+        "4": "add categories",
+        "5": "terms and conditions"
+    },
+    "create":{
+        "title":"create new account",
+        "input-name":"name",
+        "input-lastname":"lastname",
+        "input-phone":"phone",
+        "input-limit-expense":"limit expense",
+        "input-salary":"salary",
+        "input-initDay":"init day"
+    },
     "comon":{
         "mixer-grafic":"total",
         "modalSecure":{
+            "text": "Are you sure to delete the transaction",
             "title-alert":"alert",
             "button-delete":"eliminate",
             "button-cancel":"Cancel"
@@ -20,7 +37,11 @@
             "order-by":"order by",
             "filters":{
                 "date": "date",
-                "amount": "amount"
+                "amount": "amount",
+                "invert": {
+                    "up": "ascending",
+                    "down": "descending"
+                }
             },
             "button-delete":"delete",
             "button-edit":"edit",
@@ -157,6 +178,22 @@
         "title":"profitability between savings accounts",
         "bank":"bank",
         "input-money":"Init money",
+        "input-entry": "Entry",
+        "input-cant":"number of years",
+        "input-frecuency": {
+            "title": "Frecuency",
+            "items": {
+                "0": "monthly",
+                "1": "annual"
+            }
+        },
+        "input-time": {
+            "title": "Time",
+            "items": {
+                "0": "init",
+                "1": "final"
+            }
+        },
         "comparar":{
             "title":"interest rate",
             "target":"card",
