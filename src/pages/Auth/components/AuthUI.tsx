@@ -1,12 +1,12 @@
 import React from 'react'
-// import { useNavigate } from 'react-router-dom'
 import { imgFinanzas, pngTitulo } from '../../../contexts/images.context'
 import Typed from 'typed.js'
 import { useTranslation } from 'react-i18next'
 import LanguageButton from '../../../components/LanguageButton.component'
+import { useNavigate } from 'react-router-dom'
 
 const AuthUI: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-//   const navigate = useNavigate()
+  const navigate = useNavigate()
   const textChange = React.useRef(null)
   const { t, i18n } = useTranslation()
 
@@ -61,7 +61,7 @@ const AuthUI: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                     </div>
                     <div className="w-full text-center" >
                         <button onClick={() => {
-                        // navigate('/conditions')
+                          navigate('/conditions')
                         }} className=" bg-main-white lowercase text-gray-800 py-2 px-4 rounded-full font-bold" >
                             {t('auth.terms')}
                         </button>

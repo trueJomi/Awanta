@@ -7,13 +7,14 @@ import { useTranslation } from 'react-i18next'
 import { interesCompuesto } from '../../../utilities/calculates'
 import CustomInput from '../../../components/Custom/CustomInput.component'
 import MoneyInput from '../../../components/Custom/MoneyInput.componet'
+import { adapterStringtoNumber } from '../../../adapters/Numbers.adapter'
 
 interface PredictData {
   amount: string
   ingreso: string
   lugarIngreso: 'inicio' | 'fin'
   frecuenciaIngreso: 'mensual' | 'anual'
-  cant: number
+  cant: string
   tasa1: number
   tasa2: number
   tasa3: number
@@ -29,7 +30,7 @@ const AsesorateUI: React.FC<PropsAsesorateUI> = ({ tasas }) => {
     ingreso: '',
     lugarIngreso: 'inicio',
     frecuenciaIngreso: 'mensual',
-    cant: 1,
+    cant: '',
     tasa1: 0,
     tasa2: 1,
     tasa3: 2
@@ -39,7 +40,7 @@ const AsesorateUI: React.FC<PropsAsesorateUI> = ({ tasas }) => {
   const valdiate = (
     dataPredict.amount !== '' &&
     +dataPredict.amount >= 0 &&
-    dataPredict.cant !== undefined &&
+    dataPredict.cant !== '' &&
     +dataPredict.cant >= 1 &&
     existData
   )
@@ -141,14 +142,7 @@ const AsesorateUI: React.FC<PropsAsesorateUI> = ({ tasas }) => {
                     value={dataPredict.cant}
                     name="cant"
                     label={t('tab-4.input-cant')}
-                    onChange={(event) => {
-                      if (+event.target.value >= 1) {
-                        setDataPredict({
-                          ...dataPredict,
-                          cant: +event.target.value
-                        })
-                      }
-                    }}
+                    onChange={handleChange}
                     type="number"
                   />
                 </div>
@@ -178,7 +172,7 @@ const AsesorateUI: React.FC<PropsAsesorateUI> = ({ tasas }) => {
                     }
                 </CustomInput>
                     {(existData)
-                      ? <Comparar tasa={tasas[dataPredict.tasa1]} ganancia={interesCompuesto(tasas[dataPredict.tasa1].tasa, +dataPredict.amount, +dataPredict.ingreso, dataPredict.cant, dataPredict.frecuenciaIngreso, dataPredict.lugarIngreso)} />
+                      ? <Comparar tasa={tasas[dataPredict.tasa1]} ganancia={interesCompuesto(tasas[dataPredict.tasa1].tasa, adapterStringtoNumber(dataPredict.amount), +dataPredict.ingreso, +dataPredict.cant, dataPredict.frecuenciaIngreso, dataPredict.lugarIngreso)} />
                       : <div className="w-full h-80 bg-gray-100 dark:bg-gray-800 mt-3 rounded-3xl animate-pulse" ></div>}
                 </div>
                 <div className="col-span-1 px-3 xl:border-r-2" >
@@ -192,8 +186,8 @@ const AsesorateUI: React.FC<PropsAsesorateUI> = ({ tasas }) => {
                         { tasas !== undefined
                           ? tasas.map((item, indx) => (
                                 <MenuItem
-                                key={item.id}
-                                value={indx}
+                                  key={item.id}
+                                  value={indx}
                                 >{item.nombre}</MenuItem>
                           ))
                           : <MenuItem
@@ -203,7 +197,7 @@ const AsesorateUI: React.FC<PropsAsesorateUI> = ({ tasas }) => {
                           }
                     </CustomInput>
                     { existData
-                      ? <Comparar tasa={tasas[dataPredict.tasa2]} ganancia={interesCompuesto(tasas[dataPredict.tasa2].tasa, +dataPredict.amount, +dataPredict.ingreso, dataPredict.cant, dataPredict.frecuenciaIngreso, dataPredict.lugarIngreso)} />
+                      ? <Comparar tasa={tasas[dataPredict.tasa2]} ganancia={interesCompuesto(tasas[dataPredict.tasa2].tasa, adapterStringtoNumber(dataPredict.amount), +dataPredict.ingreso, +dataPredict.cant, dataPredict.frecuenciaIngreso, dataPredict.lugarIngreso)} />
                       : <div className="w-full h-80 bg-gray-100 dark:bg-gray-800 mt-3 rounded-3xl animate-pulse" ></div>}
                 </div>
                 { (sizeWindow > 1280) && <div className="col-span-1 px-3" >
@@ -228,7 +222,7 @@ const AsesorateUI: React.FC<PropsAsesorateUI> = ({ tasas }) => {
                       }
                 </CustomInput>
                     { existData
-                      ? <Comparar tasa={tasas[dataPredict.tasa3]} ganancia={interesCompuesto(tasas[dataPredict.tasa3].tasa, +dataPredict.amount, +dataPredict.ingreso, dataPredict.cant, dataPredict.frecuenciaIngreso, dataPredict.lugarIngreso)}/>
+                      ? <Comparar tasa={tasas[dataPredict.tasa3]} ganancia={interesCompuesto(tasas[dataPredict.tasa3].tasa, adapterStringtoNumber(dataPredict.amount), +dataPredict.ingreso, +dataPredict.cant, dataPredict.frecuenciaIngreso, dataPredict.lugarIngreso)}/>
                       : <div className="w-full h-80 bg-gray-100 dark:bg-gray-800 mt-3 rounded-3xl animate-pulse" ></div>}
                 </div>}
             </div>
@@ -237,7 +231,7 @@ const AsesorateUI: React.FC<PropsAsesorateUI> = ({ tasas }) => {
             >
             <div>
                   { (valdiate) &&
-                  <BarCompare tasas={[tasas[dataPredict.tasa1], tasas[dataPredict.tasa2], tasas[dataPredict.tasa3]]} inicial={+dataPredict.amount} entry={+dataPredict.ingreso} time={dataPredict.lugarIngreso} frecuency={dataPredict.frecuenciaIngreso} cant={+dataPredict.cant} />}
+                  <BarCompare tasas={[tasas[dataPredict.tasa1], tasas[dataPredict.tasa2], tasas[dataPredict.tasa3]]} inicial={adapterStringtoNumber(dataPredict.amount)} entry={+dataPredict.ingreso} time={dataPredict.lugarIngreso} frecuency={dataPredict.frecuenciaIngreso} cant={+dataPredict.cant} />}
             </div>
             </Zoom>
         </div>

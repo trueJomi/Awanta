@@ -14,7 +14,7 @@ const LanguageButton: React.FC = () => {
   return (
     <CustomInput
               type="text"
-              change={saveLang}
+              onChange={saveLang}
               value={i18n.language}
               select
               name='languaje'

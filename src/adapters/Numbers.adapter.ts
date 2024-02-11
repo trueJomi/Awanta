@@ -8,3 +8,8 @@ export const adapterNumberRound2 = (numero: number) => {
   const rounded = Number(numero.toFixed(2))
   return rounded
 }
+
+export const adapterStringtoNumber = (numero: string) => {
+  const number = Number(numero.replace(',', ''))
+  return number
+}

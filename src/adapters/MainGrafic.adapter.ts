@@ -3,7 +3,7 @@ import { type LimiteGastos } from '../models/LimiteGastos.model'
 import { type Transaccion } from '../models/Transaccion.model'
 import { type MainGrafic } from '../models/utils/Grrafic.model'
 import { filtroChangeDollar, sumaCantidad } from '../utilities/filters.utilities'
-import { adapterNumberString } from './Numbers.adapter'
+import { adapterNumberString, adapterStringtoNumber } from './Numbers.adapter'
 
 const toMainGrafic = (list: Transaccion[], type: string, color: string, limiteGastos: LimiteGastos): MainGrafic => {
   const dataMoney = list.map(filtroChangeDollar)
@@ -25,7 +25,7 @@ export const tranformDataMixerGrafic = (limiteGastos: LimiteGastos, transactions
   }
   let countTrans = 0
   for (const item of listData) {
-    countTrans = countTrans + (+item.cant)
+    countTrans = countTrans + adapterStringtoNumber(item.cant)
   }
   const cantMeta = limiteGastos.cantidad - countTrans
   if (aditionals) {
@@ -77,7 +77,7 @@ export const createLabelsFromMainGrafic = (data: MainGrafic[]) => {
   const TempData: number[] = []
   const TempBGC: string[] = []
   for (const item of data) {
-    TempData.push(+item.cant)
+    TempData.push(adapterStringtoNumber(item.cant))
     TempBGC.push(item.color)
     Templabel.push(item.type)
   }

@@ -23,7 +23,7 @@ const SearchTransactions: React.FC <{ setTransactions: (data: Transaccion[]) => 
         type='text'
         label='Buscar'
         value={search}
-        change={handleSearch}
+        onChange={handleSearch}
     />
   )
 }

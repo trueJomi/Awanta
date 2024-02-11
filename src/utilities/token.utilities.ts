@@ -5,19 +5,23 @@ export const getToken = async (): Promise<{
   accessToken: string
   idToken: string
 }> => {
-  const storageRaw = getLocalStorageObject()
-  if (isTokenExpired()) {
-    const token = await getValidTokenFromServer(storageRaw.refreshToken)
-    setLocalStorageObject(token.accessToken, storageRaw.refreshToken, newExpirationDate(), token.idToken)
-    return {
-      accessToken: token.accessToken,
-      idToken: token.idToken
+  try {
+    const storageRaw = getLocalStorageObject()
+    if (isTokenExpired()) {
+      const token = await getValidTokenFromServer(storageRaw.refreshToken)
+      setLocalStorageObject(token.accessToken, storageRaw.refreshToken, newExpirationDate(), token.idToken)
+      return {
+        accessToken: token.accessToken,
+        idToken: token.idToken
+      }
+    } else {
+      return {
+        accessToken: storageRaw.accessToken,
+        idToken: storageRaw.idToken
+      }
     }
-  } else {
-    return {
-      accessToken: storageRaw.accessToken,
-      idToken: storageRaw.idToken
-    }
+  } catch (error) {
+    throw new Error('No token found')
   }
 }
 

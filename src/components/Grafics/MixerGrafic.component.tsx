@@ -12,6 +12,7 @@ import { type Categoria } from '../../models/Categoria.model'
 import { toLabelsGrafic } from '../../adapters/MainGrafic.adapter'
 import { adapterNumberString } from '../../adapters/Numbers.adapter'
 import { sumaCantidad } from '../../utilities/filters.utilities'
+import TextSkeleton from '../Squeletons/TextSkeleton.component'
 Chart.register(
   Tooltip,
   ArcElement)
@@ -85,13 +86,16 @@ const MixerGrafics: React.FC<PropsGrafic> = ({ limiteGastos, transactions, categ
       <span
       className="relative -z-10 flex -top-1/2 -translate-y-8 font-extrabold text-xl"
       >
-        <div className={`text-center w-full ${negative ? 'text-red-500' : ''}`}>
-          <div className="uppercase" >total</div>
-
-          {transactions !== undefined
-            ? <><span>S/</span><span>{adapterNumberString(sumaCantidad(transactions))}</span></>
-            : <div className="animate-pulse h-6 w-30"/>}
-        </div>
+        <div className={`text-center flex justify-center items-center w-full ${negative ? 'text-red-500' : ''}`}>
+          <div>
+            <div className="uppercase" >total</div>
+            {transactions !== undefined
+              ? <div>
+                  <span>S/</span><span>{adapterNumberString(sumaCantidad(transactions))}</span>
+                </div>
+              : <div className=' w-28' ><TextSkeleton/></div>}
+            </div>
+          </div>
       </span>
     </>
   )

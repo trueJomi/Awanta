@@ -33,6 +33,7 @@ const FormTransaction: React.FC<{ transaction?: Transaccion, fun: (transacction:
     })
   const [loading, setLoading] = React.useState<boolean>(false)
   const [disable, setDisable] = React.useState<boolean>(true)
+  const dataCurretnMoneda = AllMoney.find((money) => money.name === currentTransaction.moneda)
 
   const guardarTransaction = (event: React.MouseEvent<HTMLFormElement>) => {
     setLoading(true)
@@ -97,7 +98,7 @@ const FormTransaction: React.FC<{ transaction?: Transaccion, fun: (transacction:
                       disabled={currentTransaction.correo}
                       onChange={handleChange}
                       label={t('comon.transaction.input-amount')}
-                      prefix='S/ '
+                      prefix={dataCurretnMoneda?.simbol + ' '}
                       />
                 </div>
             </div>

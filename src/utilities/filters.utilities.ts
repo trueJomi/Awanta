@@ -1,3 +1,4 @@
+import { adapterStringtoNumber } from '../adapters/Numbers.adapter'
 import { moneyString } from '../contexts/money.context'
 import { type Transaccion } from '../models/Transaccion.model'
 
@@ -19,7 +20,7 @@ export const filtroEmail = (data: Transaccion) => {
 
 export const filtroChangeDollar = (data: Transaccion) => {
   if (data.moneda === 'USD') {
-    const newData: Transaccion = { ...data, moneda: moneyString.PEN, cantidad: 3.68 * (+data.cantidad) }
+    const newData: Transaccion = { ...data, moneda: moneyString.PEN, cantidad: (3.68 * (+data.cantidad)).toString() }
     return newData
   } else {
     return data
@@ -44,12 +45,13 @@ export const filtredTransactionOrigin = (data: Transaccion[], origin: string) =>
 
 export const sumaCantidad = (data?: Transaccion[]) => {
   if (data === undefined) return 0
+  if (data.length === 0) return 0
   let count = 0
   for (const item of data) {
     if (item.moneda === moneyString.USD) {
-      count = count + (3.68 * (+item.cantidad))
+      count = count + (3.68 * adapterStringtoNumber(item.cantidad))
     } else {
-      count = count + (+item.cantidad)
+      count = count + adapterStringtoNumber(item.cantidad)
     }
   }
   return count
@@ -79,7 +81,7 @@ export const invertArray = (data: Transaccion[]) => {
 export const orderByCantidad = (data: Transaccion[]) => {
   const newData = [...data]
   newData.sort((a, b) => {
-    return +b.cantidad - +a.cantidad
+    return adapterStringtoNumber(b.cantidad) - adapterStringtoNumber(a.cantidad)
   })
   return newData
 }

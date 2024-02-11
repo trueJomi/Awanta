@@ -15,7 +15,7 @@ const GmailProvider: React.FC<{ children: any }> = ({ children }) => {
   }
 
   React.useEffect(() => {
-    if (user !== undefined) {
+    if ((user !== undefined && loadingMessages)) {
       getGmailsMessages().then(() => {
         setLoadingMessages(false)
       }).catch(() => {

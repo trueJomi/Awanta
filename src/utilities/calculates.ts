@@ -27,7 +27,7 @@ export const interesCompuesto = (interes: number, total: number, entry: number, 
       }
     }
   }
-  const gananciaTotal = price - entradaTotal
+  const gananciaTotal = price - entradaTotal - total
   return gananciaTotal
 }
 

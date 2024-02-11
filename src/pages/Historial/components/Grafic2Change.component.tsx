@@ -68,7 +68,7 @@ const Grafic2Change: React.FC<{ transactions?: Transaccion[], limiteGasto?: Limi
           transactions={transactionsTotal}
           limiteGasto={limiteGasto}
           categorias={category}
-          height={72}
+          height={80}
         />}
       </div>
     </div>

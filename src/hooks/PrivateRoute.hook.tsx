@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import { Navigate } from 'react-router-dom'
 import { AuthContext } from './Auth.hook'
 import Loading from '../components/Loading.component'
+import { GmailProvider } from './Gmail.hook'
 
 const PrivateRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { authState, user } = useContext(AuthContext)
@@ -16,7 +17,11 @@ const PrivateRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => 
     return <Navigate to='/auth' />
   }
 
-  return children
+  return (
+    <GmailProvider>
+      {children}
+    </GmailProvider>
+  )
 }
 
 export default PrivateRoute

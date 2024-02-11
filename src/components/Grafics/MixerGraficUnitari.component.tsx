@@ -1,9 +1,9 @@
 import React from 'react'
 import { type Transaccion } from '../../models/Transaccion.model'
 import { type LimiteGastos } from '../../models/LimiteGastos.model'
-import MixerGrafics from '../MixerGrafic.component'
+import MixerGrafics from './MixerGrafic.component'
 import { type Categoria } from '../../models/Categoria.model'
-import MixerGraficSquare from '../MixerGraficSquare.component'
+import MixerGraficSquare from './MixerGraficSquare.component'
 
 const MixerGraficUnitari: React.FC<{ transactions?: Transaccion[], limiteGasto?: LimiteGastos, categorias?: Categoria[], height: number | string }> = ({ transactions, limiteGasto, categorias, height }) => {
   return (
