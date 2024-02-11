@@ -1,5 +1,6 @@
 dist
 dist-ssr
+dev-dist
 *.local
 *.prod
 # Created by https://www.toptal.com/developers/gitignore/api/node,visualstudiocode,windows,macos,linux,test
