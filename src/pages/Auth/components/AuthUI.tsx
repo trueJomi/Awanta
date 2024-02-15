@@ -3,15 +3,12 @@ import { imgFinanzas, pngTitulo } from '../../../contexts/images.context'
 import Typed from 'typed.js'
 import { useTranslation } from 'react-i18next'
 import LanguageButton from '../../../components/LanguageButton.component'
-import { useNavigate } from 'react-router-dom'
 
 const AuthUI: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const navigate = useNavigate()
-  const textChange = React.useRef(null)
   const { t, i18n } = useTranslation()
 
   React.useEffect(() => {
-    const typed = new Typed(textChange.current, {
+    const typed = new Typed('#caracteristicas', {
       strings: [`<span>${t('auth.baner.word-1')}📊</span>^1000\n<br><span class="text-green-500" >${t('auth.baner.word-2')}💰</span>^1000\n<br><span class="text-blue-400" >${t('auth.baner.word-3')}📈</span>`],
       typeSpeed: 50,
       backSpeed: 50,
@@ -60,11 +57,9 @@ const AuthUI: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                         <h1>{t('auth.title.phrase-2')}</h1>
                     </div>
                     <div className="w-full text-center" >
-                        <button onClick={() => {
-                          navigate('/conditions')
-                        }} className=" bg-main-white lowercase text-gray-800 py-2 px-4 rounded-full font-bold" >
+                        <a className=" bg-main-white lowercase text-gray-800 py-2 px-4 rounded-full font-bold" href='https://www.awanta.app/preguntas-frecuentes/terms-and-conditions-en' >
                             {t('auth.terms')}
-                        </button>
+                        </a>
                     </div>
                 </div>
                 <div className="w-full relative bg-opacity-100 lg:bg-opacity-70 bg-gray-800  xl:col-span-2 h-screen grid items-center uppercase text-3xl" >
@@ -73,7 +68,7 @@ const AuthUI: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                         <h1 className="mb-10 text-center" >{t('auth.baner.head-2')}</h1>
                         <div className="w-full" >
                             <div className="mx-auto" >
-                                <span className="font-black text-main-yellow font-mono text-3xl" ref={textChange}></span>
+                                <span className="font-black text-main-yellow font-mono text-3xl" id='caracteristicas' ></span>
                             </div>
                         </div>
                     </div>

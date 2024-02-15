@@ -1,16 +1,17 @@
 import {
   getFunctions,
-  httpsCallable
-  // connectFunctionsEmulator
+  httpsCallable,
+  connectFunctionsEmulator
 } from 'firebase/functions'
 // import { API_URL } from '../contexts/env.context'
 // import { auth } from './AuthFirebase.service'
 import { app } from '../utilities/firebase-config.utilities'
 import { API_URL } from '../contexts/env.context'
 import { type HttpResponseWrapper } from '../models/utils/HttpInterface'
+import { type TransaccionBase } from '../models/Transaccion.model'
 
 const funtions = getFunctions(app)
-// connectFunctionsEmulator(funtions, 'localhost', 5000)
+connectFunctionsEmulator(funtions, 'localhost', 5000)
 
 interface TokenResponse {
   accessToken: string
@@ -76,7 +77,14 @@ export const getMessagesGoogle = async (accessToken: string) => {
     const fun = httpsCallable(funtions, 'getGmailsTransactions')
     const result = await fun({ accessToken })
     const { body } = result.data as any
-    return body
+    const dataRaw = body as []
+    const data = dataRaw.map((data: TransaccionBase) => {
+      return {
+        ...data,
+        fecha: new Date(data.fecha)
+      }
+    })
+    return data
   } catch (error) {
     throw new Error(error as string)
   }

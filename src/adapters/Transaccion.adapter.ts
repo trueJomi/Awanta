@@ -83,6 +83,5 @@ export const obtainAllByCategory = (transacciones: Transaccion[], categorias: Ca
       result[idxCategory].data.push(transacciones[idx])
     }
   }
-
   return result
 }

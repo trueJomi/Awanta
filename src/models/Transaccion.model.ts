@@ -5,6 +5,7 @@ export interface TransaccionBase {
   idTransaccion: string
   moneda: string
   origen: string
+  codigo?: string
   tipo: string
   usuario: string
   categoria: string

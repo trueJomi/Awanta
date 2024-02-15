@@ -17,6 +17,14 @@ export class TransactionService {
     return await comonCreateDataWithId(tTran, 'Transaction', id)
   }
 
+  async saveAll (allData: TransaccionBase[], id: string) {
+    const tTran = allData.map((data) => adapterEndpointTransaccionBase(data))
+    const promises = tTran.map(async (data) => {
+      return await comonCreateDataWithId(data, 'Transaction', id)
+    })
+    return await Promise.all(promises)
+  }
+
   async delete (id: string, idTransaccion: string) {
     await comonDeleteData(`User/${id}/Transaction`, idTransaccion)
   }
