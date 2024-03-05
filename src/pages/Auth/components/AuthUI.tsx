@@ -3,6 +3,7 @@ import { imgFinanzas, pngTitulo } from '../../../contexts/images.context'
 import Typed from 'typed.js'
 import { useTranslation } from 'react-i18next'
 import LanguageButton from '../../../components/LanguageButton.component'
+import { DEV_MODE } from '../../../contexts/env.context'
 
 const AuthUI: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { t, i18n } = useTranslation()
@@ -22,6 +23,7 @@ const AuthUI: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     }
   }, [i18n.language])
 
+  console.log('dev mode', DEV_MODE)
   return (
         <div
         style={{

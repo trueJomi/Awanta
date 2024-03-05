@@ -6,3 +6,4 @@ export const STORAGE_BUCKET = import.meta.env.VITE_STORAGE_BUCKET
 export const MESSAGING_SENDER_ID = import.meta.env.VITE_MESSAGING_SENDER_ID
 export const APP_ID = import.meta.env.VITE_APP_ID
 export const MESSUREMENT_ID = import.meta.env.VITE_MESSUREMENT_ID
+export const DEV_MODE = import.meta.env.VITE_DEV_MODE as boolean

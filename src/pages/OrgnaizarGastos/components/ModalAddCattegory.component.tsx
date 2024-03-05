@@ -92,7 +92,7 @@ const ModalAddCattegory: React.FC = () => {
                               name='category'
                               label={t('tab-2.modal.input-category')}
                               type="text"
-                              change={saveName}
+                              onChange={saveName}
                             />
                           </div>
                           <div className="mt-2 mx-auto">

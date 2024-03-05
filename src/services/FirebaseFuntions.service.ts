@@ -3,15 +3,15 @@ import {
   httpsCallable,
   connectFunctionsEmulator
 } from 'firebase/functions'
-// import { API_URL } from '../contexts/env.context'
-// import { auth } from './AuthFirebase.service'
 import { app } from '../utilities/firebase-config.utilities'
-import { API_URL } from '../contexts/env.context'
+import { API_URL, DEV_MODE } from '../contexts/env.context'
 import { type HttpResponseWrapper } from '../models/utils/HttpInterface'
 import { type TransaccionBase } from '../models/Transaccion.model'
 
 const funtions = getFunctions(app)
-connectFunctionsEmulator(funtions, 'localhost', 5000)
+if (DEV_MODE) {
+  connectFunctionsEmulator(funtions, 'localhost', 5000)
+}
 
 interface TokenResponse {
   accessToken: string
