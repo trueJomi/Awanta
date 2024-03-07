@@ -9,7 +9,7 @@ import { type HttpResponseWrapper } from '../models/utils/HttpInterface'
 import { type TransaccionBase } from '../models/Transaccion.model'
 
 const funtions = getFunctions(app)
-if (DEV_MODE) {
+if (DEV_MODE === 'true') {
   connectFunctionsEmulator(funtions, 'localhost', 5000)
 }
 
