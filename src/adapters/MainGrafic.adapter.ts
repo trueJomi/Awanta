@@ -5,10 +5,15 @@ import { type MainGrafic } from '../models/utils/Grrafic.model'
 import { filtroChangeDollar, sumaCantidad } from '../utilities/filters.utilities'
 import { adapterNumberString, adapterStringtoNumber } from './Numbers.adapter'
 
-const toMainGrafic = (list: Transaccion[], type: string, color: string, limiteGastos: LimiteGastos): MainGrafic => {
+const toMainGrafic = (list: Transaccion[], type: string, color: string, limiteGastos: LimiteGastos, suma: number, negative: boolean): MainGrafic => {
   const dataMoney = list.map(filtroChangeDollar)
   const countMoney = sumaCantidad(dataMoney)
-  const porcent = (countMoney / limiteGastos.cantidad) * 100
+  let porcent: number
+  if (negative) {
+    porcent = (countMoney / suma) * 100
+  } else {
+    porcent = (countMoney / limiteGastos.cantidad) * 100
+  }
   return {
     type,
     cant: adapterNumberString(countMoney),
@@ -18,16 +23,14 @@ const toMainGrafic = (list: Transaccion[], type: string, color: string, limiteGa
 }
 
 export const tranformDataMixerGrafic = (limiteGastos: LimiteGastos, transactions: Transaccion[], categorys: Categoria[], aditionals: boolean = false) => {
+  const sumaTotal = sumaCantidad(transactions)
+  const negative = sumaTotal >= limiteGastos.cantidad
   const listData: MainGrafic[] = []
   for (const item of categorys) {
     const dataNoFilter = transactions.filter((x) => { return x.categoria === item.nombre })
-    listData.push(toMainGrafic(dataNoFilter, item.nombre, item.color, limiteGastos))
+    listData.push(toMainGrafic(dataNoFilter, item.nombre, item.color, limiteGastos, sumaTotal, negative))
   }
-  let countTrans = 0
-  for (const item of listData) {
-    countTrans = countTrans + adapterStringtoNumber(item.cant)
-  }
-  const cantMeta = limiteGastos.cantidad - countTrans
+  const cantMeta = limiteGastos.cantidad - sumaTotal
   if (aditionals) {
     if (cantMeta > 0) {
       const porcentMeta = (cantMeta / limiteGastos.cantidad) * 100
@@ -39,7 +42,7 @@ export const tranformDataMixerGrafic = (limiteGastos: LimiteGastos, transactions
       }
       listData.push(metaData)
     } else {
-      const cantMetaNegative = (limiteGastos.cantidad - countTrans) * -1
+      const cantMetaNegative = sumaTotal - limiteGastos.cantidad
       const porcentMeta = (cantMetaNegative / limiteGastos.cantidad) * 100
       const metaData = {
         type: 'ecxeso',

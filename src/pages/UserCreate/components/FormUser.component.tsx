@@ -52,24 +52,24 @@ const FormUser: React.FC = () => {
         <div>
             <CustomInput
                 type='text'
-                change={handleNameChange}
-                inputProps={{
+                onChange={handleNameChange}
+                InputProps={{
                   placeholder: 'Jhon'
                 }}
                 label={t('create.input-name')}
-                valueDefault={name}
+                defaultValue={name}
                 name="name"
             />
         </div>
         <div>
             <CustomInput
                 type='text'
-                inputProps={{
+                InputProps={{
                   placeholder: 'Titor'
                 }}
-                change={handleLastNameChange}
+                onChange={handleLastNameChange}
                 label={t('create.input-lastname')}
-                valueDefault={lastName}
+                defaultValue={lastName}
                 name="lastName"
             />
         </div>
@@ -80,7 +80,7 @@ const FormUser: React.FC = () => {
                   label="number"
                   name="number"
                   value={number}
-                  change={handleNumberChange}
+                  onChange={handleNumberChange}
                   select
               >
                   {telefonos.map((tel) => (
@@ -96,10 +96,10 @@ const FormUser: React.FC = () => {
             <div className='w-full' >
               <CustomInput
                   type='tel'
-                  inputProps={{
+                  InputProps={{
                     placeholder: '999 999 999'
                   }}
-                  change={handlePhoneChange}
+                  onChange={handlePhoneChange}
                   label={t('create.input-phone')}
                   name="phone"
               />

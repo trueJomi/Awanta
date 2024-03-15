@@ -21,7 +21,7 @@ const Limites: React.FC = () => {
     <>
       <div>
         <CustomInput
-          // valueDefault={user?.limiteGasto}
+          // defaultValue={user?.limiteGasto}
           name='limit '
           type='number'
           label='Limite de gastos'
@@ -29,7 +29,7 @@ const Limites: React.FC = () => {
       </div>
       <div>
         <CustomInput
-          valueDefault={user?.salario}
+          defaultValue={user?.salario}
           type='number'
           name='salary'
           label='Salario'
@@ -40,8 +40,8 @@ const Limites: React.FC = () => {
             select
             type='number'
             value={initDay}
-            valueDefault={user?.diaInicial}
-            change={handleInitDay}
+            defaultValue={user?.diaInicial}
+            onChange={handleInitDay}
             name='init-day'
             label={t('comon.settings.init-day')}
           >
